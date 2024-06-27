@@ -1,0 +1,81 @@
+@use "../../assets/scss/abstracts/mixins" as abstracts;
+
+.product {
+    &__title {
+        margin-bottom: 21px;
+        color: var(--text-color);
+        font-size: 2.4rem;
+        font-weight: 700;
+        line-height: 141.667%;
+        @include abstracts.screen(md) {
+            font-size: 2.2rem;
+            line-height: 145.455%;
+        }
+    }
+}
+
+.product-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 20px;
+    background: var(--bg-product);
+    box-shadow: 0px 20px 60px 10px var(--shadow-product-item);
+    &__img {
+        position: relative;
+        width: 280px;
+        height: 284px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+    }
+    &__thumb {
+        width: 100%;
+        height: 100%;
+    }
+    &__heart {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50px;
+        height: 50px;
+        box-shadow: 0px 20px 60px var(--product-heart-shadow);
+        background: var(--bg-heart);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__heart--img {
+        filter: var(--color-heart);
+    }
+
+    &__title,
+    &__price,
+    &__number {
+        color: var(--text-color);
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__lava {
+        color: var(--color-lava);
+        font-size: 1.5rem;
+        font-weight: 400;
+        line-height: 146.667%;
+    }
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__comment {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+}

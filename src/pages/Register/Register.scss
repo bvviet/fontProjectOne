@@ -1,0 +1,214 @@
+@use "../../assets/scss/abstracts/mixins" as abstracts;
+
+.login {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    height: 100vh;
+    &__left {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: var(--bg-left);
+
+        @include abstracts.screen(md) {
+            display: none;
+        }
+
+        @include abstracts.screen(lg) {
+            padding: 20px;
+        }
+
+        &-desc {
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1.8rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 144.444%;
+            margin-top: 50px;
+        }
+        &-content {
+            margin: 0 auto;
+            max-width: 422px;
+        }
+    }
+}
+
+.login-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-right);
+
+    @include abstracts.screen(lg) {
+        padding: 20px;
+    }
+
+    @include abstracts.screen(md) {
+        padding: 15px;
+        padding-top: 80px;
+        justify-content: stretch;
+    }
+
+    &__content {
+        max-width: 460px;
+        margin: 0 auto;
+    }
+    &__heading {
+        margin-top: 50px;
+        font-size: 3rem;
+        font-weight: 500;
+        color: var(--text-color);
+        text-align: center;
+
+        @include abstracts.screen(md) {
+            font-size: 2.2rem;
+        }
+    }
+    &__desc {
+        margin-top: 10px;
+        color: var(--color-desc);
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 146.667%;
+
+        @include abstracts.screen(md) {
+            font-size: 1.4rem;
+        }
+    }
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 60px;
+    margin-bottom: 108px;
+
+    @include abstracts.screen(md) {
+        margin-top: 30px;
+        margin-bottom: 56px;
+    }
+}
+
+.login-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    &__input {
+        width: 100%;
+        padding: 12px 200px 12px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border-input);
+    }
+
+    &__input::placeholder {
+        color: var(--placeholder);
+        font-size: 1.8rem;
+        font-weight: 500;
+        line-height: 144.444%;
+
+        @include abstracts.screen(md) {
+            font-size: 1.6rem;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        right: 15px;
+    }
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+
+    &__checkBox {
+        width: 18.5px;
+        height: 18.5px;
+        margin-right: 10px;
+    }
+
+    &__label {
+        color: var(--color-desc);
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 146.667%;
+
+        @include abstracts.screen(md) {
+            font-size: 1.4rem;
+        }
+    }
+
+    &__recovery {
+        margin-left: auto;
+        color: var(--color-recovery);
+        font-size: 1.5rem;
+        font-weight: 500;
+
+        @include abstracts.screen(md) {
+            font-size: 1.4rem;
+        }
+    }
+}
+
+.withEmail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 0;
+    border-radius: 10px;
+    border: 1px solid var(--border-input);
+
+    &__icon {
+        filter: var(--icon-google);
+    }
+
+    &__link {
+        color: var(--color-desc);
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+}
+
+.login-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    &__donNot {
+        color: var(--color-desc);
+        font-size: 1.8rem;
+        font-weight: 400;
+        @include abstracts.screen(md) {
+            font-size: 1.6rem;
+        }
+    }
+
+    &__signUp {
+        color: var(--color-recovery);
+        font-size: 1.8rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 144.444%;
+
+        @include abstracts.screen(md) {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+.close__icon {
+    display: none;
+    @include abstracts.screen(md) {
+        display: block;
+    }
+}

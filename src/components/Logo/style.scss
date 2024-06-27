@@ -1,0 +1,17 @@
+@use "../../assets/scss/abstracts/mixins" as abstracts;
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    &__title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 145.455%;
+        color: var(--logo-bg);
+        @include abstracts.screen(md) {
+            font-size: 1.8rem;
+        }
+    }
+}

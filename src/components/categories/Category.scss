@@ -1,0 +1,65 @@
+@use "../../assets/scss/abstracts/mixins" as abstracts;
+.cate {
+    margin: 40px 0;
+    &__title {
+        font-size: 2.4rem;
+        font-weight: 700;
+        line-height: 141.667%;
+        color: var(--text-color);
+
+        @include abstracts.screen(md) {
+            font-size: 2.2rem;
+            line-height: 145.455%;
+        }
+    }
+}
+
+.cate-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 26px 20px 20px;
+    margin-top: 20px;
+    background: var(--bg-cate__item);
+    border-radius: 16px;
+    &__thumb {
+        width: 116px;
+        height: 116px;
+        border-radius: 16px;
+        background: var(--bg-thumb);
+
+        @include abstracts.screen(xl) {
+            width: 100px;
+            height: 100px;
+        }
+
+        @include abstracts.screen(sm) {
+            width: 88px;
+            height: 88px;
+        }
+    }
+    &__price {
+        color: var(--color-cate__price);
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 145.455%;
+        @include abstracts.screen(xl) {
+            font-size: 2rem;
+        }
+        @include abstracts.screen(sm) {
+            font-size: 1.8rem;
+        }
+    }
+    &__desc {
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 150%;
+        color: var(--text-color);
+        @include abstracts.screen(xl) {
+            font-size: 1.5rem;
+        }
+        @include abstracts.screen(sm) {
+            font-size: 1.4rem;
+        }
+    }
+}

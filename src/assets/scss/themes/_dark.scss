@@ -1,0 +1,71 @@
+html.dark {
+    --text-color: #fff;
+    --header-bg: #171c28;
+    --logo-bg: #fff;
+
+    // Action
+    --bg-action: #292e39;
+    --color-action: #292e39;
+    --rectangle-color: #ededf6;
+    --icon--color: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(340deg)
+        brightness(99%) contrast(102%);
+    --shadow-action: rgba(0, 0, 0, 0.2);
+
+    // Close
+    --close-left: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(287deg) brightness(103%)
+        contrast(102%);
+    --bg-close: #292e39;
+
+    // Main
+    --bg-main: #292e39;
+
+    // category
+    --bg-cate__item: #171c28;
+    --bg-thumb: #292e39;
+    --color-cate__price: #fff;
+
+    // Products
+    --bg-product: #171c28;
+    --shadow-product-item: rgba(237, 237, 246, 0.2);
+    --product-heart-shadow: rgba(124, 124, 124, 0.2);
+    --bg-heart: #292e39;
+    --color-lava: #9e9da8;
+    --color-heart: brightness(0) saturate(100%) invert(100%) sepia(94%) saturate(0%) hue-rotate(226deg) brightness(106%)
+        contrast(104%);
+
+    // Detail
+    --bg-detail: #292e39;
+    --bg-detail-right: #171c28;
+    --shadow-detail-filter: rgba(23, 28, 40, 0.2);
+    --text--detail-9E: #9e9da8;
+    --border--select: #d2d1d6;
+    --color-rectangle: #d2d1d6;
+    --shadow-detail-right: rgba(23, 28, 40, 0.2);
+
+    // Login
+    --bg-left: #171c28;
+    --bg-right: #292e39;
+    --color-desc: #9e9da8;
+    --border-input: #b9babe;
+    --placeholder: #b9babe;
+    --color-recovery: #0071dc;
+    --icon-google: brightness(0) saturate(100%) invert(86%) sepia(9%) saturate(87%) hue-rotate(191deg) brightness(89%)
+        contrast(82%);
+
+    // Dialog
+    --text-color-dialog: #b3b3b3;
+
+    // Profile
+    --filter-icon: brightness(0) saturate(100%) invert(79%) sepia(11%) saturate(62%) hue-rotate(190deg) brightness(92%)
+        contrast(92%);
+    --bg-profile: #171c28;
+    --color-profile-link: #b9babe;
+    --shadow-profile-avatar: rgba(237, 237, 246, 0.2);
+    --color--profile-hover: #484848;
+    --bg-account-item: #292e39;
+
+    --color-add-new: #b9babe;
+
+    // Add product card
+    --bg-product-card-item: #171c28;
+}
