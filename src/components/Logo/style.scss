@@ -5,13 +5,19 @@
     align-items: center;
     justify-content: center;
     gap: 14px;
+
+    @include abstracts.screen(md) {
+        display: none;
+    }
+    
     &__title {
         font-size: 2.2rem;
         font-weight: 700;
         line-height: 145.455%;
         color: var(--logo-bg);
-        @include abstracts.screen(md) {
+        @include abstracts.screen(xl) {
             font-size: 1.8rem;
+            display: none;
         }
     }
 }

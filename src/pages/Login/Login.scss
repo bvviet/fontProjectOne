@@ -123,6 +123,13 @@
         position: absolute;
         right: 15px;
     }
+
+    &__messages {
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 144.444%;
+        color: red;
+    }
 }
 
 .bottom {
@@ -213,6 +220,5 @@
     }
 }
 
-.message{
-    
+.message {
 }

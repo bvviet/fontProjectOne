@@ -1,11 +1,12 @@
 import "./Login.scss";
+import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Đảm bảo import CSS của react-toastify
+import "react-toastify/dist/ReactToastify.css";
 
 import loginBanner from "../../assets/images/login.png";
 import google from "../../assets/icons/google.svg";
@@ -17,7 +18,6 @@ import Logo from "../../components/Logo/Logo";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState(0);
     const [messages, setMessages] = useState("");
 
     const {
@@ -32,48 +32,32 @@ const Login = () => {
                 position: "top-right",
                 autoClose: 2000,
             });
+            setMessages("");
         }
     }, [messages]);
-
+    console.log(messages);
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await fetch("https://project-one-navy.vercel.app/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                if (errorData.message) {
-                    setMessages(errorData.message);
-                } else if (errorData.errors && errorData.errors.length > 0) {
-                    setMessages(errorData.errors[0]);
-                }
-                throw new Error(errorData.message || "Đăng nhập thất bại");
+            const response = await axios.post("https://project-one-navy.vercel.app/auth/login", data);
+            if (response.status === 200) {
+                toast.success("Đăng nhập thành công!", {
+                    position: "top-right",
+                    autoClose: 2000,
+                });
             }
-
-            const result = await response.json();
-
-            setStatus(response.status);
-
-            toast.success("Đăng nhập thành công!", {
-                position: "top-right",
-                autoClose: 2000,
-            });
-
-            console.log(result.message, status);
         } catch (error) {
-            if (error.name === "TypeError" && error.message === "Failed to fetch") {
-                setMessages("Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.");
+            let errorMessage = "";
+            if (!error.response) {
+                errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+            } else if (error.response.status === 404) {
+                errorMessage = "API hiện tại đang bị lỗi :((";
+            } else if (error.response.data.message) {
+                errorMessage = error.response.data.message || error.response.data.errors[0];
+            } else {
+                errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
             }
-            toast.error(messages || "Đăng nhập thất bại. Vui lòng thử lại.", {
-                position: "top-right",
-                autoClose: 2000,
-            });
+            setMessages(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -92,7 +76,7 @@ const Login = () => {
             >
                 {loading && <CircularProgress />}
             </Box>
-            {/* Hiển thị lỗi */}
+            {/* Hiển thị messages */}
             <ToastContainer />
 
             <div className="login">
@@ -131,7 +115,7 @@ const Login = () => {
                                 />
                                 <img src={message} alt="" className="login-item__icon" />
                             </div>
-                            {errors.email && <span>This field is required</span>}
+                            {errors.email && <span className="login-item__messages">Email không được bỏ trống.</span>}
 
                             <div className="login-item">
                                 <input
@@ -142,7 +126,9 @@ const Login = () => {
                                 />
                                 <img src={lock} alt="" className="login-item__icon" />
                             </div>
-                            {errors.password && <span>This field is required</span>}
+                            {errors.password && (
+                                <span className="login-item__messages">Password không được bỏ trống.</span>
+                            )}
 
                             <div className="bottom">
                                 <input type="checkbox" id="set" className="bottom__checkBox" />

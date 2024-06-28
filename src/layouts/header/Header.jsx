@@ -1,7 +1,7 @@
 import "./Header.scss";
 import DarkMode from "../../components/Switch/Switch";
 import around from "../../assets/icons/around.svg";
-import search from "../../assets/icons/search.svg";
+
 import heart from "../../assets/icons/heart.svg";
 import buy from "../../assets/icons/buy.svg";
 import avatar from "../../assets/images/avatar.avif";
@@ -17,6 +17,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Logo from "../../components/Logo/Logo";
 import { Link } from "react-router-dom";
+import Search from "../../components/Search/Search";
 
 const NavBar = () => (
     <ul className="navbar">
@@ -125,19 +126,11 @@ export default function Header() {
                         <NavBar />
                     </nav>
 
+                    {/* Tìm kiếm */}
+                    <Search />
+
                     {/* Action */}
                     <div className="top-action">
-                        {/* Light Dark */}
-                        <div className="dark-mode">
-                            <DarkMode />
-                        </div>
-
-                        <div className="top-action__group">
-                            <button className="top-action__btn">
-                                <img src={search} alt="search" className="top-action__icon icon" />
-                            </button>
-                        </div>
-
                         <div className="top-action__group top-action__group-double">
                             <button className="top-action__btn">
                                 <img src={heart} alt="heart" className="top-action__icon icon" />
@@ -207,6 +200,11 @@ export default function Header() {
                                         </Link>
                                     </li>
                                 </ul>
+                                <hr className="dialog__hr" />
+                                {/* Light Dark */}
+                                <div className="dark-mode">
+                                    <DarkMode />
+                                </div>
                             </div>
                         </div>
                     </div>

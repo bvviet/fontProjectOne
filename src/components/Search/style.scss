@@ -1,0 +1,79 @@
+@use "../../assets/scss/abstracts/mixins" as abstracts;
+.top-action__group-search {
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    border-radius: 20px;
+    margin: 0 auto;
+    background: var(--bg-action);
+    padding: 13px;
+    @include abstracts.screen(lg) {
+        display: flex;
+    }
+    input {
+        padding: 0 20px;
+        width: 350px;
+        @include abstracts.screen(xl) {
+            width: 200px;
+            padding: 0 6px;
+        }
+        @include abstracts.screen(md) {
+            width: 180px;
+            padding: 0 6px;
+        }
+    }
+}
+
+.top-action__icon-clear {
+    width: 20px;
+    height: 20px;
+}
+
+.wrapper {
+    position: absolute;
+    width: 400px;
+    height: auto;
+    right: -200px;
+    top: 69px;
+    border-radius: 8px;
+    padding: 10px;
+    background: var(--bg-product);
+    @include abstracts.screen(xl) {
+        position: absolute;
+        right: -128px;
+        top: 69px;
+        width: 250px;
+        padding: 0 6px;
+    }
+    @include abstracts.screen(md) {
+        position: absolute;
+        right: -115px;
+        top: 69px;
+        width: 230px;
+        padding: 0 6px;
+    }
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    &__title {
+        font-size: 1.3rem;
+        line-height: 140%;
+        color: var(--text-color);
+        padding-bottom: 4px;
+    }
+
+    &__price {
+        font-size: 1.2rem;
+        color: var(--color-lava);
+    }
+
+    &__img {
+        width: 40px;
+        height: 40px;
+    }
+}
