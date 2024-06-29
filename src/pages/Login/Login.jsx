@@ -3,7 +3,7 @@ import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +19,7 @@ import Logo from "../../components/Logo/Logo";
 const Login = () => {
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState("");
+    const navigate = useNavigate();
 
     const {
         register,
@@ -35,7 +36,7 @@ const Login = () => {
             setMessages("");
         }
     }, [messages]);
-    console.log(messages);
+
     const onSubmit = async (data) => {
         setLoading(true);
         try {
@@ -43,8 +44,12 @@ const Login = () => {
             if (response.status === 200) {
                 toast.success("Đăng nhập thành công!", {
                     position: "top-right",
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
+                localStorage.setItem("token", response.data.token);
+                setTimeout(() => {
+                    navigate("/");
+                }, 2300);
             }
         } catch (error) {
             let errorMessage = "";
@@ -151,9 +156,9 @@ const Login = () => {
                         {/* Do not */}
                         <div className="login-title">
                             <p className="login-title__donNot">Don’t have an account yet?</p>
-                            <a href="#" className="login-title__signUp">
+                            <Link to="/register" className="login-title__signUp">
                                 Sign Up
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </section>

@@ -1,22 +1,21 @@
 import "./Header.scss";
+import { useState } from "react";
 import DarkMode from "../../components/Switch/Switch";
-import around from "../../assets/icons/around.svg";
-
-import heart from "../../assets/icons/heart.svg";
-import buy from "../../assets/icons/buy.svg";
-import avatar from "../../assets/images/avatar.avif";
-import documents from "../../assets/icons/document.svg";
-import close from "../../assets/icons/close.svg";
-
-import * as React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+
+import heart from "../../assets/icons/heart.svg";
+import buy from "../../assets/icons/buy.svg";
+import avatar from "../../assets/images/avatar.avif";
+import documents from "../../assets/icons/document.svg";
+import close from "../../assets/icons/close.svg";
+import around from "../../assets/icons/around.svg";
 import Logo from "../../components/Logo/Logo";
-import { Link } from "react-router-dom";
 import Search from "../../components/Search/Search";
 
 const NavBar = () => (
@@ -43,8 +42,18 @@ const NavBar = () => (
 );
 
 export default function Header() {
-    const [open, setOpen] = React.useState(false);
-    const [wrapper, setWrapper] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [wrapper, setWrapper] = useState(false);
+    const navigate = useNavigate();
+
+    // Lấy token
+    const token = localStorage.getItem("token");
+
+    // Đăng xuất
+    const handleLogOut = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -129,85 +138,102 @@ export default function Header() {
                     {/* Tìm kiếm */}
                     <Search />
 
+                    {/* Button Đăng ký, đăng nhập */}
+                    {!token && (
+                        <>
+                            <DarkMode />
+                            <div className="button-list">
+                                <Link to="/register" className="button-list__item button-list__item-signUp">
+                                    Sign Up
+                                </Link>
+                                <Link to="/login" className="button-list__item button-list__item-login">
+                                    Login
+                                </Link>
+                            </div>
+                        </>
+                    )}
+
                     {/* Action */}
-                    <div className="top-action">
-                        <div className="top-action__group top-action__group-double">
-                            <button className="top-action__btn">
-                                <img src={heart} alt="heart" className="top-action__icon icon" />
-                                <span className="top-action__title">03</span>
-                            </button>
-                            <div className="top-action__rectangle"></div>
-                            <button className="top-action__btn">
-                                <img src={buy} alt="buy" className="top-action__icon icon" />
-                                <span className="top-action__title">$65.42</span>
-                            </button>
-                        </div>
-                        {/* Avatar */}
-                        <div className="top-action__avatar">
-                            <img src={avatar} alt="" className="top-action__avatar-image" onClick={toggleDialog} />
-                            {/* Dialog */}
-                            <div id="dialog" className={`${wrapper ? "" : "dialog__hidden"} dialog`}>
-                                <div className="dialog__info">
-                                    <img src={avatar} alt="" className="dialog__avatar" />
-                                    <p className="dialog__name">Bàn Văn Việt</p>
-                                </div>
+                    {token && (
+                        <div className="top-action">
+                            <div className="top-action__group top-action__group-double">
+                                <button className="top-action__btn">
+                                    <img src={heart} alt="heart" className="top-action__icon icon" />
+                                    <span className="top-action__title">03</span>
+                                </button>
+                                <div className="top-action__rectangle"></div>
+                                <button className="top-action__btn">
+                                    <img src={buy} alt="buy" className="top-action__icon icon" />
+                                    <span className="top-action__title">$65.42</span>
+                                </button>
+                            </div>
+                            {/* Avatar */}
+                            <div className="top-action__avatar">
+                                <img src={avatar} alt="" className="top-action__avatar-image" onClick={toggleDialog} />
+                                {/* Dialog */}
+                                <div id="dialog" className={`${wrapper ? "" : "dialog__hidden"} dialog`}>
+                                    <div className="dialog__info">
+                                        <img src={avatar} alt="" className="dialog__avatar" />
+                                        <p className="dialog__name">Bàn Văn Việt</p>
+                                    </div>
 
-                                <hr className="dialog__hr" />
+                                    <hr className="dialog__hr" />
 
-                                <ul className="dialog__list">
-                                    <li className="dialog__item">
-                                        <Link to="/profile" className="dialog__link">
-                                            Trang cá nhân
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    <ul className="dialog__list">
+                                        <li className="dialog__item">
+                                            <Link to="/profile" className="dialog__link">
+                                                Trang cá nhân
+                                            </Link>
+                                        </li>
+                                    </ul>
 
-                                <hr className="dialog__hr" />
-                                <ul className="dialog__list">
-                                    <li className="dialog__item">
-                                        <Link to="#!" className="dialog__link">
-                                            Viết blog
-                                        </Link>
-                                        <Link to="#!" className="dialog__link">
-                                            Bài viết của tôi
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    <hr className="dialog__hr" />
+                                    <ul className="dialog__list">
+                                        <li className="dialog__item">
+                                            <Link to="#!" className="dialog__link">
+                                                Viết blog
+                                            </Link>
+                                            <Link to="#!" className="dialog__link">
+                                                Bài viết của tôi
+                                            </Link>
+                                        </li>
+                                    </ul>
 
-                                <hr className="dialog__hr" />
-                                <ul className="dialog__list">
-                                    <li className="dialog__item">
-                                        <Link to="#!" className="dialog__link">
-                                            Bài viết đã lưu
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    <hr className="dialog__hr" />
+                                    <ul className="dialog__list">
+                                        <li className="dialog__item">
+                                            <Link to="#!" className="dialog__link">
+                                                Bài viết đã lưu
+                                            </Link>
+                                        </li>
+                                    </ul>
 
-                                <hr className="dialog__hr" />
-                                <ul className="dialog__list">
-                                    <li className="dialog__item">
-                                        <Link to="#!" className="dialog__link">
-                                            Cài đặt
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    <hr className="dialog__hr" />
+                                    <ul className="dialog__list">
+                                        <li className="dialog__item">
+                                            <Link to="#!" className="dialog__link">
+                                                Cài đặt
+                                            </Link>
+                                        </li>
+                                    </ul>
 
-                                <hr className="dialog__hr" />
-                                <ul className="dialog__list">
-                                    <li className="dialog__item">
-                                        <Link to="#!" className="dialog__link">
-                                            Đăng xuất
-                                        </Link>
-                                    </li>
-                                </ul>
-                                <hr className="dialog__hr" />
-                                {/* Light Dark */}
-                                <div className="dark-mode">
-                                    <DarkMode />
+                                    <hr className="dialog__hr" />
+                                    <ul className="dialog__list">
+                                        <li className="dialog__item">
+                                            <p onClick={handleLogOut} className="dialog__link">
+                                                Đăng xuất
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    <hr className="dialog__hr" />
+                                    {/* Light Dark */}
+                                    <div className="dark-mode">
+                                        <DarkMode />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </Box>
         </header>

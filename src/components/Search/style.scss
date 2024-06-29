@@ -6,7 +6,7 @@
     border-radius: 20px;
     margin: 0 auto;
     background: var(--bg-action);
-    padding: 13px;
+    padding: 13px 23px 13px 13px;
     @include abstracts.screen(lg) {
         display: flex;
     }

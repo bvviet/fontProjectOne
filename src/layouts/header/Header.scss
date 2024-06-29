@@ -227,6 +227,7 @@ header {
         color: var(--text-color-dialog);
         padding: 10px 0;
         opacity: 0.8;
+        cursor: pointer;
     }
 
     &__link:hover {
@@ -237,5 +238,28 @@ header {
 .dark-mode {
     @include abstracts.screen(md) {
         width: 50px;
+    }
+}
+
+.button-list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    &__item-login {
+        flex-shrink: 0;
+        padding: 10px 20px;
+        border-radius: 99px;
+        color: #fff;
+        background: linear-gradient(to right bottom, #ff8f26, #ffb700);
+        font-size: 1.4rem;
+        font-weight: 600;
+        transition: opacity 0.25s;
+    }
+    &__item-signUp {
+        color: var(--text-color);
+        font-size: 1.4rem;
+        font-weight: 600;
+        transition: opacity 0.25s;
     }
 }

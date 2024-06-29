@@ -169,9 +169,9 @@ const Register = () => {
                         {/* Do not */}
                         <div className="login-title">
                             <p className="login-title__donNot">Don’t have an account yet?</p>
-                            <a href="#" className="login-title__signUp">
+                            <Link to="/login" className="login-title__signUp">
                                 Sign In
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </section>
