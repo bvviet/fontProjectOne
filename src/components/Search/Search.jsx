@@ -20,11 +20,13 @@ const Search = () => {
 
     const debounce = useDebounce(valueInput, 500);
 
+    // Lấy dữ liệu input
     const handleSearch = (event) => {
         setValueInput(event.target.value);
         console.log(valueInput);
     };
 
+    // Xóa dữ liệu input
     const clearValueInput = () => {
         setValueInput("");
         inputRef.current.focus();
@@ -58,6 +60,7 @@ const Search = () => {
         }
     }, [debounce]);
 
+    // Ẩn nội kết quả tìm kiếm
     const handleHideResult = () => {
         setShowResult(false);
     };

@@ -41,6 +41,7 @@ const Login = () => {
         setLoading(true);
         try {
             const response = await axios.post("https://project-one-navy.vercel.app/auth/login", data);
+            console.log(response.data.data);
             if (response.status === 200) {
                 toast.success("Đăng nhập thành công!", {
                     position: "top-right",

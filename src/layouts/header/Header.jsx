@@ -1,6 +1,5 @@
 import "./Header.scss";
-import { useState } from "react";
-import DarkMode from "../../components/Switch/Switch";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -8,6 +7,9 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+
+import DarkMode from "../../components/Switch/Switch";
+import { UserContext } from "../../hooks/UserContextUser";
 
 import heart from "../../assets/icons/heart.svg";
 import buy from "../../assets/icons/buy.svg";
@@ -44,7 +46,14 @@ const NavBar = () => (
 export default function Header() {
     const [open, setOpen] = useState(false);
     const [wrapper, setWrapper] = useState(false);
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
+
+    // Lấy thông tin người dùng
+    const userData = useContext(UserContext);
+    useEffect(() => {
+        setUser(userData);
+    }, [userData]);
 
     // Lấy token
     const token = localStorage.getItem("token");
@@ -55,13 +64,17 @@ export default function Header() {
         navigate("/login");
     };
 
+    // Ẩn hiện menu điện thoại
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
 
+    // Ẩn hiện popper profile
     const toggleDialog = () => {
         setWrapper(!wrapper);
     };
+
+    // Nội dung menu điện thoại
     const DrawerList = () => (
         <Box
             className="box"
@@ -174,7 +187,7 @@ export default function Header() {
                                 <div id="dialog" className={`${wrapper ? "" : "dialog__hidden"} dialog`}>
                                     <div className="dialog__info">
                                         <img src={avatar} alt="" className="dialog__avatar" />
-                                        <p className="dialog__name">Bàn Văn Việt</p>
+                                        <p className="dialog__name">{user?.userName}</p>
                                     </div>
 
                                     <hr className="dialog__hr" />

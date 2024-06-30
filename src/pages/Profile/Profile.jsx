@@ -1,8 +1,10 @@
-import { Box, Grid } from "@mui/material";
 import "./style.scss";
+import { useContext, useEffect, useState } from "react";
+import { Box, Grid } from "@mui/material";
+
+import { UserContext } from "../../hooks/UserContextUser";
 
 import Button from "../../components/Button/Button";
-
 import avatar from "../../assets/images/avatar.avif";
 import person from "../../assets/icons/person.svg";
 import address from "../../assets/icons/address.svg";
@@ -15,12 +17,17 @@ import help from "../../assets/icons/help.svg";
 import danger from "../../assets/icons/danger.svg";
 import add from "../../assets/icons/add.svg";
 import phone from "../../assets/icons/phone.svg";
-
 import payment1 from "../../assets/images/payment1.png";
 import payment2 from "../../assets/images/payment2.png";
 import product1 from "../../assets/images/product1.png";
 
 const Profile = () => {
+    const [user, setUser] = useState({});
+    const userData = useContext(UserContext);
+    useEffect(() => {
+        setUser(userData);
+    }, [userData]);
+
     return (
         <Box
             sx={{
@@ -47,8 +54,12 @@ const Profile = () => {
                     <div className="profile">
                         <div className="profile-info">
                             <img src={avatar} alt="" className="profile-info__image" />
-                            <h1 className="profile-info__name">Bàn Văn Việt</h1>
-                            <p className="profile-info__desc">Registered: 17th May 2022</p>
+                            <h1 className="profile-info__name">{user?.userName}</h1>
+                            {user && user.createdAt && (
+                                <p className="profile-info__desc">
+                                    Registered: {new Date(user.createdAt).toDateString()}
+                                </p>
+                            )}
                         </div>
 
                         {/* Profile menu 1*/}
