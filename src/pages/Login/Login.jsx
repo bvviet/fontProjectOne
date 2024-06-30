@@ -58,7 +58,7 @@ const Login = () => {
                 errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
             } else if (error.response.status === 404) {
                 errorMessage = "API hiện tại đang bị lỗi :((";
-            } else if (error.response.data.message) {
+            } else if (error.response.data.message || error.response.data.errors) {
                 errorMessage = error.response.data.message || error.response.data.errors[0];
             } else {
                 errorMessage = "Đã xảy ra lỗi vui lòng thử lại";

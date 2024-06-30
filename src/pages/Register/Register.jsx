@@ -1,9 +1,10 @@
 import "./Register.scss";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { Box, CircularProgress } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 
 import loginBanner from "../../assets/images/login.png";
@@ -13,12 +14,11 @@ import lock from "../../assets/icons/lock.svg";
 import close from "../../assets/icons/close.svg";
 import Button from "../../components/Button/Button";
 import Logo from "../../components/Logo/Logo";
-import { Box, CircularProgress } from "@mui/material";
 
 const Register = () => {
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState("");
-
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -49,8 +49,11 @@ const Register = () => {
             if (response.status === 200) {
                 toast.success("Đăng ký thành công.", {
                     position: "top-right",
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
+                setTimeout(() => {
+                    navigate("/");
+                }, 2300);
             }
         } catch (error) {
             console.log(error);
@@ -59,8 +62,8 @@ const Register = () => {
                 errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
             } else if (error.response.status === 404) {
                 errorMessage = "API hiện tại đang bị lỗi :((";
-            } else if (error.response.data.message) {
-                errorMessage = error.response.data.message[0] || error.response.data.errors[0];
+            } else if (error.response.data.message || error.response.data.errors) {
+                errorMessage = error.response.data.message || error.response.data.errors[0];
             } else {
                 errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
             }
