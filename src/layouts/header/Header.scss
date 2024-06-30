@@ -261,5 +261,8 @@ header {
         font-size: 1.4rem;
         font-weight: 600;
         transition: opacity 0.25s;
+        @include abstracts.screen(md) {
+            display: none;
+        }
     }
 }

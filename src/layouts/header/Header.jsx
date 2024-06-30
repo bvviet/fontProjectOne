@@ -76,19 +76,12 @@ export default function Header() {
 
     // Nội dung menu điện thoại
     const DrawerList = () => (
-        <Box
-            className="box"
-            height={100000}
-            sx={{ width: 250 }}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
+        <Box className="box" height={100000} sx={{ width: 250 }} role="presentation" onKeyDown={toggleDrawer(false)}>
             <List>
                 <ListItem disablePadding>
                     <ListItemButton>
                         <div className="close">
-                            <button className="close-left">
+                            <button onClick={toggleDrawer(false)} className="close-left">
                                 <img src={close} alt="" className="close-left__icons" />
                             </button>
 
@@ -113,6 +106,9 @@ export default function Header() {
                         <NavBar />
                     </ListItemButton>
                 </ListItem>
+                <ListItemButton>
+                    <DarkMode />
+                </ListItemButton>
             </List>
         </Box>
     );
@@ -154,7 +150,6 @@ export default function Header() {
                     {/* Button Đăng ký, đăng nhập */}
                     {!token && (
                         <>
-                            <DarkMode />
                             <div className="button-list">
                                 <Link to="/register" className="button-list__item button-list__item-signUp">
                                     Sign Up
