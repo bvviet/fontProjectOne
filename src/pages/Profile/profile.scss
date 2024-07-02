@@ -1,8 +1,7 @@
 @use "../../assets/scss/abstracts/mixins" as abstracts;
 
-.content {
+.content-profile {
     margin-top: 30px;
-
     @include abstracts.screen(md) {
         display: block;
     }

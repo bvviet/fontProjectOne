@@ -178,6 +178,7 @@ export default function Header() {
                             {/* Avatar */}
                             <div className="top-action__avatar">
                                 <img src={avatar} alt="" className="top-action__avatar-image" onClick={toggleDialog} />
+                                
                                 {/* Dialog */}
                                 <div id="dialog" className={`${wrapper ? "" : "dialog__hidden"} dialog`}>
                                     <div className="dialog__info">

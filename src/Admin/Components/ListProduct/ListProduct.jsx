@@ -1,5 +1,7 @@
 import "./style.scss";
 import * as React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +11,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-import axios from "axios";
 
 const columns = [
     { id: "name", label: "Tên sản phẩm", minWidth: 170 },
@@ -47,9 +48,11 @@ const ListProduct = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState([]);
+    const navigate = useNavigate();
 
     const createData = (data) => {
         return data.map((item) => ({
+            id: item._id,
             name: item.name,
             price: item.price,
             description: item.description,
@@ -75,14 +78,19 @@ const ListProduct = () => {
         setPage(0);
     };
 
-    const handleEdit = (row) => {
-        // Xử lý logic chỉnh sửa sản phẩm
-        console.log("Edit:", row);
+    const handleEdit = (id) => {
+        navigate(`/admin/update/${id}`);
     };
 
-    const handleDelete = (row) => {
-        // Xử lý logic xóa sản phẩm
-        console.log("Delete:", row);
+    const handleDelete = async (id) => {
+        try {
+            if (window.confirm("Bạn có chắc chắn xóa")) {
+                const response = await axios.delete(`https://project-one-navy.vercel.app/product/${id}`);
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -112,8 +120,8 @@ const ListProduct = () => {
                                             if (column.id === "actions") {
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
-                                                        <Button onClick={() => handleEdit(row)}>Sửa</Button>
-                                                        <Button onClick={() => handleDelete(row)}>Xóa</Button>
+                                                        <Button onClick={() => handleEdit(row.id)}>Sửa</Button>
+                                                        <Button onClick={() => handleDelete(row.id)}>Xóa</Button>
                                                     </TableCell>
                                                 );
                                             }

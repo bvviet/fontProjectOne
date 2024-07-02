@@ -40,15 +40,6 @@ const Sidebar = () => {
                 </li>
                 <li className="sidebar__item">
                     <NavLink
-                        to="/admin/update"
-                        className={({ isActive }) => `sidebar__link ${isActive ? "sidebar__link--active" : ""}`}
-                    >
-                        <img src="" alt="" />
-                        Update Product
-                    </NavLink>
-                </li>
-                <li className="sidebar__item">
-                    <NavLink
                         to="/admin/users"
                         className={({ isActive }) => `sidebar__link ${isActive ? "sidebar__link--active" : ""}`}
                     >

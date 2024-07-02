@@ -1,4 +1,4 @@
-import "./style.scss";
+import "./profile.scss";
 import { useContext, useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 
@@ -45,9 +45,9 @@ const Profile = () => {
             <Grid
                 container
                 rowSpacing={0}
-                columnSpacing={{ sm: "50px" }}
+                columnSpacing={{ sm: "" }}
                 columns={{ xs: 6, md: 12, lg: 12 }}
-                className="content"
+                className="content-profile"
             >
                 {/* Profile left */}
                 <Grid item xs={6} sm={4}>
