@@ -1,0 +1,43 @@
+.sidebar {
+    width: 306px;
+    height: 100vh;
+    padding: 30px;
+    background: #fff;
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 50px;
+    }
+    &__item {
+        width: 250px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    &__link {
+        width: 100%;
+        color: #9197b3;
+        font-weight: 500;
+    }
+}
+.sidebar__link--active {
+    width: 100%;
+    color: #353131;
+    font-weight: 600;
+}
+
+.info-admin {
+    display: flex;
+    align-items: center;
+    margin-top: 330px;
+    gap: 10px;
+    color: #353131;
+    font-weight: 600;
+}
+
+.logout-admin {
+    margin-top: 20px;
+    color: #ca5800;
+    font-weight: 600;
+}

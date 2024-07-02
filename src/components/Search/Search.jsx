@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useSpring, motion, AnimatePresence } from "framer-motion";
 
 import useDebounce from "../../hooks/useDebounce";
-import pro1 from "../../assets/images/product1.png";
 import search from "../../assets/icons/search.svg";
 import clear from "../../assets/icons/clear.svg";
 import loadingIcon from "../../assets/icons/loading.svg";
@@ -115,7 +114,7 @@ const Search = () => {
                                             <span className="result-item__price">{value.price}$</span>
                                         </div>
                                         <div className="result-item__img">
-                                            <img src={pro1} alt="" />
+                                            <img src={value.imageURL} alt="Lỗi ảnh" />
                                         </div>
                                     </div>
                                     <hr />

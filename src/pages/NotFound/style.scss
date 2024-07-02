@@ -1,0 +1,57 @@
+@use "../../assets/scss/abstracts/mixins" as abstracts;
+
+.notFound-page {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100vh;
+    align-content: center;
+    background: var(--bg-main);
+    overflow: hidden;
+
+    &__pc {
+        display: block;
+        @include abstracts.screen(md) {
+            display: none;
+        }
+    }
+
+    &__mobile {
+        display: none;
+        @include abstracts.screen(md) {
+            display: block;
+        }
+    }
+
+    &__right {
+        @include abstracts.screen(xl) {
+            margin-top: 60px;
+            margin-left: 20px;
+        }
+    }
+
+    &__oops,
+    &__heading {
+        font-family: Poppins;
+        font-size: 6.2rem;
+        line-height: 111.29%;
+    }
+
+    &__oops {
+        color: var(--color-notFound-oops);
+        font-weight: 500;
+        @include abstracts.screen(md) {
+            font-size: 4rem;
+            line-height: 125%;
+        }
+    }
+
+    &__heading {
+        color: var(--color-notFound-heading);
+        font-weight: 600;
+        @include abstracts.screen(md) {
+            font-size: 4rem;
+            line-height: 125%;
+        }
+    }
+}
