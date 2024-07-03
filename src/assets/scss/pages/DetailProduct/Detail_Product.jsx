@@ -9,10 +9,8 @@ import compare from "../../../icons/compare.svg";
 import buy from "../../../icons/buy.svg";
 import pickup from "../../../icons/pickup.svg";
 import heart from "../../../icons/heart.svg";
-import avatarComment from "../../../images/avatar-comment.png";
-import start50 from "../../../icons/start50.svg";
-import start0 from "../../../icons/start0.svg";
 import Button from "../../../../components/Button/Button";
+import Comment from "../../../../components/Comment/Comment";
 
 const Detail_Product = () => {
     return (
@@ -164,74 +162,7 @@ const Detail_Product = () => {
                 </ul>
             </div>
             {/* Comment */}
-            <div className="comment">
-                <h3 className="comment__title">What our customers are saying</h3>
-                <Grid container spacing={{ sm: "30px" }} columns={{ xs: 3, sm: 3, md: 6, lg: 9, xl: 9 }} style={{}}>
-                    <Grid item xs={3}>
-                        <article className="comment__item">
-                            <section className="comment__top">
-                                <img src={avatarComment} alt="" className="comment__top-avatar" />
-                                <div className="comment__top-info">
-                                    <h3 className="comment__top-heading">Jakir Hussen</h3>
-                                    <p className="comment__top-desc">Great product, I love this Coffee Beans </p>
-                                </div>
-                            </section>
-                            <div className="comment__bottom">
-                                <div className="comment__bottom__start-list">
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start50} alt="" className="comment__bottom-start" />
-                                    <img src={start0} alt="" className="comment__bottom-start" />
-                                </div>
-                                <p className="comment__bottom-review">(3.5) Review</p>
-                            </div>
-                        </article>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <article className="comment__item">
-                            <section className="comment__top">
-                                <img src={avatarComment} alt="" className="comment__top-avatar" />
-                                <div className="comment__top-info">
-                                    <h3 className="comment__top-heading">Jubed Ahmed</h3>
-                                    <p className="comment__top-desc">Awesome Coffee, I love this Coffee Beans</p>
-                                </div>
-                            </section>
-                            <div className="comment__bottom">
-                                <div className="comment__bottom__start-list">
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start50} alt="" className="comment__bottom-start" />
-                                    <img src={start0} alt="" className="comment__bottom-start" />
-                                </div>
-                                <p className="comment__bottom-review">(3.5) Review</p>
-                            </div>
-                        </article>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <article className="comment__item">
-                            <section className="comment__top">
-                                <img src={avatarComment} alt="" className="comment__top-avatar" />
-                                <div className="comment__top-info">
-                                    <h3 className="comment__top-heading">Delwar Hussain</h3>
-                                    <p className="comment__top-desc">Great product, I love this Coffee Beans </p>
-                                </div>
-                            </section>
-                            <div className="comment__bottom">
-                                <div className="comment__bottom__start-list">
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start} alt="" className="comment__bottom-start" />
-                                    <img src={start50} alt="" className="comment__bottom-start" />
-                                    <img src={start0} alt="" className="comment__bottom-start" />
-                                </div>
-                                <p className="comment__bottom-review">(3.5) Review</p>
-                            </div>
-                        </article>
-                    </Grid>
-                </Grid>
-            </div>
+            <Comment/>
         </Box>
     );
 };
