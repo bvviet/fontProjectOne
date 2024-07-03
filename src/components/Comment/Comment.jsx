@@ -23,7 +23,7 @@ const Comment = () => {
     console.log(ratingValue);
     return (
         <div className="comment">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <h3 className="comment__title">What our customers are saying</h3>
                 <Button
                     variant="outlined"
