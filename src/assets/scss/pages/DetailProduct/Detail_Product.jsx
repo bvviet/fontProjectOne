@@ -1,7 +1,9 @@
 import "./styles.scss";
 import { Box, Grid } from "@mui/material";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-import detailImg from "../../../images/detail.png";
+// import detailImg from "../../../images/detail.png";
 import start from "../../../icons/start.svg";
 import aroundRight from "../../../icons/aroundRight.svg";
 import around from "../../../icons/around.svg";
@@ -11,8 +13,28 @@ import pickup from "../../../icons/pickup.svg";
 import heart from "../../../icons/heart.svg";
 import Button from "../../../../components/Button/Button";
 import Comment from "../../../../components/Comment/Comment";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Detail_Product = () => {
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        if (id) {
+            // Kiểm tra nếu productId đã được set
+            const fetchDetail = async () => {
+                try {
+                    const response = await axios.get(`https://project-one-navy.vercel.app/product/${id}`);
+                    setProduct(response.data.data);
+                } catch (error) {
+                    console.error("Error fetching product detail:", error);
+                }
+            };
+            fetchDetail();
+        }
+    }, [id]);
+
     return (
         <Box
             sx={{
@@ -59,12 +81,12 @@ const Detail_Product = () => {
             <Grid container columns={{ xs: 5, sm: 5, md: 5, lg: 12, xl: 12 }} style={{ padding: "25px 0" }}>
                 <Grid item xs={5}>
                     <div className="detail__img">
-                        <img src={detailImg} alt="" />
+                        <img src={product?.imageURL} alt="" />
                     </div>
                 </Grid>
 
                 <Grid item xs={7} className="detail-right">
-                    <h2 className="detail-right-title">Coffee Beans - Espresso Arabica and Robusta Beans</h2>
+                    <h2 className="detail-right-title">{product?.name}</h2>
                     <Grid container columnSpacing={8} columns={{ xs: 6, sm: 6, md: 12, lg: 12, xl: 12 }}>
                         <Grid item xs={6}>
                             <div className="detail-right__item">
@@ -118,11 +140,13 @@ const Detail_Product = () => {
                                 </div>
                                 <div className="add-to-card">
                                     <div className="add-to-card__item">
-                                        <div className="add-to-card__sale-price">$500.00</div>
+                                        <div className="add-to-card__sale-price">${product?.price}</div>
                                         <div className="add-to-card__sale-number">10%</div>
                                     </div>
                                     <div className="add-to-card__item">
-                                        <div className="add-to-card__sale-price add-to-card__sale-center">$500.00</div>
+                                        <div className="add-to-card__sale-price add-to-card__sale-center">
+                                            ${product?.price}
+                                        </div>
                                     </div>
                                     <div className="add-to-card__item add-to-card__btn--group">
                                         <Button title={"Add to cart"} />
@@ -162,7 +186,7 @@ const Detail_Product = () => {
                 </ul>
             </div>
             {/* Comment */}
-            <Comment/>
+            <Comment productId={id} />
         </Box>
     );
 };
