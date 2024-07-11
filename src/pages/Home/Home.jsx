@@ -1,6 +1,6 @@
-import SlideShow from "../../../../components/SlidesShow/Slides";
-import Category from "../../../../components/categories/Category";
-import Products from "../../../../components/Products/Products";
+import SlideShow from "../../components/SlidesShow/Slides";
+import Category from "../../components/categories/Category";
+import Products from "../../components/Products/Products";
 import { Box } from "@mui/material";
 
 const Home = () => {

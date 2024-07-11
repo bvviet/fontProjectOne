@@ -68,8 +68,6 @@ const Comment = ({ productId }) => {
         fetchCommentDetail();
     }, [productId]);
 
-    console.log(comment);
-
     return (
         <div className="comment">
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

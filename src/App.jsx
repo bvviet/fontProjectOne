@@ -3,8 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import { UserProvider } from "./hooks/UserContextUser.jsx";
 import Default_layout from "./assets/scss/layout/Default/Default_layout";
-import Detail_Product from "./assets/scss/pages/DetailProduct/Detail_Product";
-import Home from "./assets/scss/pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
@@ -15,6 +13,8 @@ import ListProduct from "./Admin/Components/ListProduct/ListProduct.jsx";
 import AddProduct from "./Admin/Components/AddProduct/AddProduct.jsx";
 import UpdateProduct from "./Admin/Components/UpddateProduct/UpdateProduct.jsx";
 import AddToCard from "./pages/AddToCrad/AddToCard.jsx";
+import Detail_Product from "./pages/DetailProduct/Detail_Product.jsx";
+import Home from "./pages/Home/Home.jsx";
 
 function App() {
     return (

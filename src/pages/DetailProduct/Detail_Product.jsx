@@ -1,28 +1,33 @@
 import "./styles.scss";
 import { Box, Grid } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-// import detailImg from "../../../images/detail.png";
-import start from "../../../icons/start.svg";
-import aroundRight from "../../../icons/aroundRight.svg";
-import around from "../../../icons/around.svg";
-import compare from "../../../icons/compare.svg";
-import buy from "../../../icons/buy.svg";
-import pickup from "../../../icons/pickup.svg";
-import heart from "../../../icons/heart.svg";
-import Button from "../../../../components/Button/Button";
-import Comment from "../../../../components/Comment/Comment";
-import { useEffect } from "react";
 import axios from "axios";
+import { UserContext } from "../../hooks/UserContextUser";
+
+import start from "../../assets/icons/start.svg";
+import aroundRight from "../../assets/icons/aroundRight.svg";
+import around from "../../assets/icons/around.svg";
+import compare from "../../assets/icons/compare.svg";
+import buy from "../../assets/icons/buy.svg";
+import pickup from "../../assets/icons/pickup.svg";
+import heart from "../../assets/icons/heart.svg";
+import Button from "../../components/Button/Button";
+import Comment from "../../components/Comment/Comment";
 
 const Detail_Product = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const [user, setUser] = useState({});
+
+    // Lấy thông tin người dùng
+    const userData = useContext(UserContext);
+    useEffect(() => {
+        setUser(userData);
+    }, [userData]);
 
     useEffect(() => {
         if (id) {
-            // Kiểm tra nếu productId đã được set
             const fetchDetail = async () => {
                 try {
                     const response = await axios.get(`https://project-one-navy.vercel.app/product/${id}`);
@@ -34,6 +39,21 @@ const Detail_Product = () => {
             fetchDetail();
         }
     }, [id]);
+
+    // Thêm sản phẩm vào giỏ hàng
+    const handleAddToCard = async (productId) => {
+        console.log(productId);
+        if (productId) {
+            try {
+                await axios.post(`http://localhost:3000/order/${user._id}`, {
+                    productId: productId,
+                    quantity: product.quantity || 1,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     return (
         <Box
@@ -149,7 +169,7 @@ const Detail_Product = () => {
                                         </div>
                                     </div>
                                     <div className="add-to-card__item add-to-card__btn--group">
-                                        <Button title={"Add to cart"} />
+                                        <Button title={"Add to cart"} onClick={() => handleAddToCard(product?._id)} />
                                         <div className="add-to-card__heart">
                                             <img src={heart} alt="" className="add-to-card__heart-icon" />
                                         </div>
