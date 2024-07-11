@@ -2,9 +2,9 @@ import "./Register.scss";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 
 import loginBanner from "../../assets/images/login.png";
@@ -14,11 +14,13 @@ import lock from "../../assets/icons/lock.svg";
 import close from "../../assets/icons/close.svg";
 import Button from "../../components/Button/Button";
 import Logo from "../../components/Logo/Logo";
+import { LoadingContext } from "../../hooks/LoadingContext";
+import Loading from "../../components/Loading/Loading";
 
 const Register = () => {
-    const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState("");
     const navigate = useNavigate();
+    const { loading, setIsLoading } = useContext(LoadingContext);
     const {
         register,
         handleSubmit,
@@ -36,7 +38,7 @@ const Register = () => {
     }, [messages]);
 
     const onSubmit = async (data) => {
-        setLoading(true);
+        setIsLoading(true);
         const { userName, email, password } = data;
 
         try {
@@ -69,7 +71,7 @@ const Register = () => {
             }
             setMessages(errorMessage);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -83,9 +85,8 @@ const Register = () => {
                     transform: "translate(-50%, -50%)",
                     zIndex: 9999,
                 }}
-            >
-                {loading && <CircularProgress />}
-            </Box>
+            ></Box>
+            <Loading isShow={loading} />
             {/* Hiển thị messages */}
             <ToastContainer />
 

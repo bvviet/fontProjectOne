@@ -1,10 +1,9 @@
 import "./Login.scss";
 import axios from "axios";
-import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,11 +14,13 @@ import lock from "../../assets/icons/lock.svg";
 import close from "../../assets/icons/close.svg";
 import Button from "../../components/Button/Button";
 import Logo from "../../components/Logo/Logo";
+import { LoadingContext } from "../../hooks/LoadingContext.jsx";
+import Loading from "../../components/Loading/Loading.jsx";
 
 const Login = () => {
-    const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState("");
     const navigate = useNavigate();
+    const { loading,setIsLoading } = useContext(LoadingContext);
 
     const {
         register,
@@ -38,7 +39,7 @@ const Login = () => {
     }, [messages]);
 
     const onSubmit = async (data) => {
-        setLoading(true);
+        setIsLoading(true);
         try {
             const response = await axios.post("https://project-one-navy.vercel.app/auth/login", data);
             console.log(response.data.data);
@@ -65,7 +66,7 @@ const Login = () => {
             }
             setMessages(errorMessage);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -79,9 +80,8 @@ const Login = () => {
                     transform: "translate(-50%, -50%)",
                     zIndex: 9999,
                 }}
-            >
-                {loading && <CircularProgress />}
-            </Box>
+            ></Box>
+            <Loading isShow={loading} />
             {/* Hiển thị messages */}
             <ToastContainer />
 

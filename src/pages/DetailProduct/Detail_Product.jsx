@@ -45,10 +45,11 @@ const Detail_Product = () => {
         console.log(productId);
         if (productId) {
             try {
-                await axios.post(`http://localhost:3000/order/${user._id}`, {
+                const res = await axios.post(`http://localhost:3000/order/${user._id}`, {
                     productId: productId,
                     quantity: product.quantity || 1,
                 });
+                console.log(res.data);
             } catch (error) {
                 console.log(error);
             }

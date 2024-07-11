@@ -106,17 +106,19 @@ const Search = () => {
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <div className="result-item">
-                                        <div className="result-item__right">
-                                            <Link to="#">
-                                                <p className="result-item__title">{value.name}</p>
-                                            </Link>
-                                            <span className="result-item__price">{value.price}$</span>
+                                    <Link to={`/product/${value._id}`}>
+                                        <div className="result-item">
+                                            <div className="result-item__right">
+                                                <Link to={`/product/${value._id}`}>
+                                                    <p className="result-item__title">{value.name}</p>
+                                                </Link>
+                                                <span className="result-item__price">{value.price}$</span>
+                                            </div>
+                                            <div className="result-item__img">
+                                                <img src={value.imageURL} alt="Lỗi ảnh" />
+                                            </div>
                                         </div>
-                                        <div className="result-item__img">
-                                            <img src={value.imageURL} alt="Lỗi ảnh" />
-                                        </div>
-                                    </div>
+                                    </Link>
                                     <hr />
                                 </motion.div>
                             ))}
