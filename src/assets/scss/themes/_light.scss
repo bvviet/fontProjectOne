@@ -65,9 +65,15 @@ html {
     --color-add-new: #d2d1d6;
 
     // Add product card
-    --bg-product-card-item: #fff
+    --bg-addToCard: #eee;
+    --bg-addToCard-item: #fff;
+    --color-addToCard-heading: #1a162e;
+    --color-addToCard-ccc: #9e9da8;
+    --color-addToCard-icon: brightness(0) saturate(100%) invert(67%) sepia(5%) saturate(436%) hue-rotate(206deg)
+        brightness(93%) contrast(92%);
+    --bg--addToCard-dot: #d2d1d6;
 
     // Not found
-    --color-notFound-oops: #676A6C;
-    --color-notFound-heading: #2D3134;
+    --color-notFound-oops: #676a6c;
+    --color-notFound-heading: #2d3134;
 }

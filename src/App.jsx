@@ -14,6 +14,7 @@ import AdminLayout from "./assets/scss/layout/AdminLayout/AdminLayout.jsx";
 import ListProduct from "./Admin/Components/ListProduct/ListProduct.jsx";
 import AddProduct from "./Admin/Components/AddProduct/AddProduct.jsx";
 import UpdateProduct from "./Admin/Components/UpddateProduct/UpdateProduct.jsx";
+import AddToCard from "./pages/AddToCrad/AddToCard.jsx";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                     <Route path="product/:id" element={<Detail_Product />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/addToCard" element={<AddToCard />} />
                 </Route>
 
                 <Route path="/admin" element={<AdminLayout />}>

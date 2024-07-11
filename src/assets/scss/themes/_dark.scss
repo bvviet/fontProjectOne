@@ -67,7 +67,13 @@ html.dark {
     --color-add-new: #b9babe;
 
     // Add product card
-    --bg-product-card-item: #171c28;
+    --bg-addToCard: #292e39;
+    --bg-addToCard-item: #171c28;
+    --color-addToCard-heading: #b9babe;
+    --color-addToCard-ccc: #9e9da8;
+    --color-addToCard-icon: brightness(0) saturate(100%) invert(67%) sepia(5%) saturate(436%) hue-rotate(206deg)
+        brightness(93%) contrast(92%);
+    --bg--addToCard-dot: #d2d1d6;
 
     // Not found
     --color-notFound-oops: #b1b1b1;
