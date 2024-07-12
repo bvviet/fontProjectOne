@@ -7,50 +7,52 @@ import deleted from "../../assets/icons/delete.svg";
 import giftAdd from "../../assets/icons/giftAdd.svg";
 import aroundLeft from "../../assets/icons/aroundLeft.svg";
 import Button from "../../components/Button/Button";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../hooks/UserContextUser";
+import { useContext } from "react";
+import { OrderContext } from "../../hooks/OrderContext";
 import axios from "axios";
-// import cate2 from "../../assets/images/cate2.png";
-// import cate3 from "../../assets/images/cate3.png";
+import { LoadingContext } from "../../hooks/LoadingContext";
+import { MessagesContext } from "../../hooks/MessagesContext";
+import { toast } from "react-toastify";
+import AlertDialog from "../../components/DeleteConfirm/Delete";
 
 const AddToCard = () => {
-    const [user, setUser] = useState({});
-    const [orders, setOrders] = useState([]);
-    const orderItems = orders[0]?.order;
-    const [quantity, setQuantity] = useState();
-    console.log(quantity);
-    // Lấy thông tin người dùng
-    const userData = useContext(UserContext);
-    useEffect(() => {
-        setUser(userData);
-    }, [userData]);
+    const { orderItems, orders, total, sumQuantity, fetchOrders } = useContext(OrderContext);
+    const { setIsLoading } = useContext(LoadingContext);
+    const { setMessages } = useContext(MessagesContext);
 
-    // Lấy giỏ hàng người dùng
-    useEffect(() => {
-        if (user?._id) {
+    const handleDeleteOrderItem = async (orderItemId) => {
+        if (orderItemId) {
             try {
-                const fetchOrders = async () => {
-                    const res = await axios.get(`http://localhost:3000/order/orders/${user?._id}`);
-                    setOrders(res.data.data);
-                };
+                setIsLoading(true);
+                const res = await axios.delete(`http://localhost:3000/order/${orderItemId}`);
                 fetchOrders();
+                if (res.status === 200) {
+                    toast.success("Xóa khỏi vào giỏ hàng thành công ✅", {
+                        position: "top-right",
+                        autoClose: 1500,
+                    });
+                }
             } catch (error) {
-                console.log(error);
+                let errorMessage = "";
+                if (!error.response) {
+                    errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+                } else if (error.response.status === 404) {
+                    errorMessage = "API hiện tại đang bị lỗi :((";
+                } else if (error.response.data.message || error.response.data.errors) {
+                    errorMessage = error.response.data.message || error.response.data.errors[0];
+                } else {
+                    errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
+                }
+                setMessages(errorMessage);
+            } finally {
+                setIsLoading(false);
             }
         }
-    }, [user?._id]);
+    };
 
     if (!orders.length) {
         return <div>Loading...</div>;
     }
-
-    // Tính tổng giá
-    const totalPrice = () => {
-        const amounts = orderItems.map((item) => item.totalAmount);
-        const total = amounts.reduce((acc, cur) => acc + cur, 0);
-        return total;
-    };
-    const total = totalPrice();
 
     return (
         <Box
@@ -64,6 +66,7 @@ const AddToCard = () => {
                 },
                 backgroundColor: "var(--bg-addToCard)",
                 padding: "25px 0",
+                height: "100vh",
             }}
         >
             {/* Filter */}
@@ -101,7 +104,7 @@ const AddToCard = () => {
             >
                 {/* Left */}
                 <Grid item xs={4.3} className="add-left">
-                    {/*  */}
+                    {/* Sản phẩm */}
                     {orderItems.map((item) => (
                         <div key={item?._id}>
                             <section className="add-item">
@@ -125,8 +128,8 @@ const AddToCard = () => {
                                             <div className="product-option__quantity">
                                                 <input
                                                     type="number"
-                                                    onChange={(e) => setQuantity(e.target.value)}
                                                     defaultValue={item.quantity}
+                                                    style={{ width: "38px" }}
                                                 />
                                             </div>
                                         </form>
@@ -135,10 +138,12 @@ const AddToCard = () => {
                                                 <img src={heart} alt="heart" />
                                                 Save
                                             </div>
-                                            <div className="product-option__icon-item">
-                                                <img src={deleted} alt="" />
-                                                Delete
-                                            </div>
+                                            <AlertDialog handleDelete={() => handleDeleteOrderItem(item?._id)}>
+                                                <div className="product-option__icon-item">
+                                                    <img src={deleted} alt="" />
+                                                    Delete
+                                                </div>
+                                            </AlertDialog>
                                         </div>
                                     </div>
                                 </div>
@@ -146,6 +151,7 @@ const AddToCard = () => {
                             <div className="add__dot"></div>
                         </div>
                     ))}
+                    {/* Bottom */}
                     <div className="addLeft-bottom">
                         <div className="addLeft-bottom__left">
                             <img src={aroundLeft} alt="" />
@@ -158,7 +164,7 @@ const AddToCard = () => {
                             </div>
                             <div className="addLeft-bottom__items">
                                 <p className="addLeft-bottom__item">Shipping:</p>
-                                <p className="addLeft-bottom__item">$10:00</p>
+                                <p className="addLeft-bottom__item">$10.00</p>
                             </div>
                             <div className="add__dot "></div>
                             <div className="addLeft-bottom__items">
@@ -175,13 +181,13 @@ const AddToCard = () => {
                             <p className="add-right__subtotal-left">
                                 Subtotal <span style={{ fontWeight: "400" }}>(items)</span>
                             </p>
-                            <p className="add-right__subtotal-right">3</p>
+                            <p className="add-right__subtotal-right">{sumQuantity}</p>
                         </div>
                         <div className="add-right__subtotal">
                             <p className="add-right__subtotal-left">
                                 Price <span style={{ fontWeight: "400" }}>(Total)</span>
                             </p>
-                            <p className="add-right__subtotal-right">$191.65</p>
+                            <p className="add-right__subtotal-right">${total}</p>
                         </div>
                         <div className="add-right__subtotal">
                             <p className="add-right__subtotal-left">Shipping</p>
@@ -190,7 +196,7 @@ const AddToCard = () => {
                         <div className="add__dot add__dot-right"></div>
                         <div className="add-right__subtotal">
                             <p className="add-right__subtotal-left">Estimated Total</p>
-                            <p className="add-right__subtotal-right">$201.65</p>
+                            <p className="add-right__subtotal-right">${total + 10}</p>
                         </div>
 
                         <div className="add-btn">
@@ -213,4 +219,5 @@ const AddToCard = () => {
         </Box>
     );
 };
+
 export default AddToCard;

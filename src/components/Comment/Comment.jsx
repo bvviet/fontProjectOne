@@ -10,11 +10,17 @@ import PropTypes from "prop-types";
 
 import { UserContext } from "../../hooks/UserContextUser";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { LoadingContext } from "../../hooks/LoadingContext";
+import { MessagesContext } from "../../hooks/MessagesContext";
+import LongMenu from "../MoreVertIcon/MoreVertIcon";
 
 const Comment = ({ productId }) => {
     // Lấy thông tin người dùng
-    const [user, setUser] = useState({});
     const userData = useContext(UserContext);
+    const { setIsLoading } = useContext(LoadingContext);
+    const { setMessages } = useContext(MessagesContext);
+    const [user, setUser] = useState({});
     const [comment, setComment] = useState([]);
 
     const [visible, setVisible] = useState(false);
@@ -36,9 +42,25 @@ const Comment = ({ productId }) => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = async (data) => {
-        console.log(data.content);
+    // Lấy bình luận theo id sản phẩm
+    const fetchCommentDetail = async () => {
         try {
+            const response = await axios.get(`https://project-one-navy.vercel.app/comment/${productId}`);
+            setComment(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchCommentDetail();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [comment]);
+
+    // Thêm bình luận
+    const onSubmit = async (data) => {
+        try {
+            setIsLoading(true);
             const response = await axios({
                 method: "post",
                 url: "https://project-one-navy.vercel.app/comment",
@@ -49,24 +71,30 @@ const Comment = ({ productId }) => {
                     rating: ratingValue,
                 },
             });
-            console.log(response);
+            if (response.status === 200) {
+                toast.success("Đã thêm bình luận✅", {
+                    position: "top-right",
+                    autoClose: 1500,
+                });
+            }
+            setVisible(false);
+            fetchCommentDetail();
         } catch (error) {
-            console.log(error);
+            let errorMessage = "";
+            if (!error.response) {
+                errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+            } else if (error.response.status === 404) {
+                errorMessage = "API hiện tại đang bị lỗi :((";
+            } else if (error.response.data.message || error.response.data.errors) {
+                errorMessage = error.response.data.message || error.response.data.errors[0];
+            } else {
+                errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
+            }
+            setMessages(errorMessage);
+        } finally {
+            setIsLoading(false);
         }
     };
-
-    // Lấy bình luận theo id sản phẩm
-    useEffect(() => {
-        const fetchCommentDetail = async () => {
-            try {
-                const response = await axios.get(`https://project-one-navy.vercel.app/comment/${productId}`);
-                setComment(response.data.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchCommentDetail();
-    }, [productId]);
 
     return (
         <div className="comment">
@@ -151,7 +179,7 @@ const Comment = ({ productId }) => {
                                     <h3 className="comment__top-heading">{value?.userId?.userName}</h3>
                                     <p className="comment__top-desc">{value?.content}</p>
                                 </div>
-                                {user?._id === value?.userId?._id ? <p>3 cham</p> : ""}
+                                {user?._id === value?.userId?._id ? <LongMenu /> : ""}
                             </section>
                             <div className="comment__bottom">
                                 <div className="comment__bottom__start-list">

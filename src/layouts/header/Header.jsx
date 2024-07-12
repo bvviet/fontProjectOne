@@ -19,6 +19,7 @@ import close from "../../assets/icons/close.svg";
 import around from "../../assets/icons/around.svg";
 import Logo from "../../components/Logo/Logo";
 import Search from "../../components/Search/Search";
+import { OrderContext } from "../../hooks/OrderContext";
 
 const NavBar = () => (
     <ul className="navbar">
@@ -48,7 +49,7 @@ export default function Header() {
     const [wrapper, setWrapper] = useState(false);
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-
+    const { total } = useContext(OrderContext);
     // Lấy thông tin người dùng
     const userData = useContext(UserContext);
     useEffect(() => {
@@ -170,15 +171,15 @@ export default function Header() {
                                     <span className="top-action__title">03</span>
                                 </button>
                                 <div className="top-action__rectangle"></div>
-                                <button className="top-action__btn">
+                                <Link to={"/addToCard"} className="top-action__btn">
                                     <img src={buy} alt="buy" className="top-action__icon icon" />
-                                    <span className="top-action__title">$65.42</span>
-                                </button>
+                                    <span className="top-action__title">${total}</span>
+                                </Link>
                             </div>
                             {/* Avatar */}
                             <div className="top-action__avatar">
                                 <img src={avatar} alt="" className="top-action__avatar-image" onClick={toggleDialog} />
-                                
+
                                 {/* Dialog */}
                                 <div id="dialog" className={`${wrapper ? "" : "dialog__hidden"} dialog`}>
                                     <div className="dialog__info">

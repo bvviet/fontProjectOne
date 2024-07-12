@@ -14,11 +14,18 @@ import pickup from "../../assets/icons/pickup.svg";
 import heart from "../../assets/icons/heart.svg";
 import Button from "../../components/Button/Button";
 import Comment from "../../components/Comment/Comment";
+import { OrderContext } from "../../hooks/OrderContext";
+import { MessagesContext } from "../../hooks/MessagesContext";
+import { toast } from "react-toastify";
+import { LoadingContext } from "../../hooks/LoadingContext";
 
 const Detail_Product = () => {
     const { id } = useParams();
-    const [product, setProduct] = useState(null);
+    const { fetchOrders } = useContext(OrderContext);
+    const { setIsLoading } = useContext(LoadingContext);
+    const { setMessages } = useContext(MessagesContext);
     const [user, setUser] = useState({});
+    const [product, setProduct] = useState(null);
 
     // Lấy thông tin người dùng
     const userData = useContext(UserContext);
@@ -30,28 +37,61 @@ const Detail_Product = () => {
         if (id) {
             const fetchDetail = async () => {
                 try {
+                    setIsLoading(true);
                     const response = await axios.get(`https://project-one-navy.vercel.app/product/${id}`);
                     setProduct(response.data.data);
                 } catch (error) {
-                    console.error("Error fetching product detail:", error);
+                    let errorMessage = "";
+                    if (!error.response) {
+                        errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+                    } else if (error.response.status === 404) {
+                        errorMessage = "API hiện tại đang bị lỗi :((";
+                    } else if (error.response.data.message || error.response.data.errors) {
+                        errorMessage = error.response.data.message || error.response.data.errors[0];
+                    } else {
+                        errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
+                    }
+                    setMessages(errorMessage);
+                } finally {
+                    setIsLoading(false);
                 }
             };
             fetchDetail();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     // Thêm sản phẩm vào giỏ hàng
-    const handleAddToCard = async (productId) => {
+    const handleAddToCard = async (productId, product) => {
         console.log(productId);
         if (productId) {
             try {
+                setIsLoading(true);
                 const res = await axios.post(`http://localhost:3000/order/${user._id}`, {
                     productId: productId,
                     quantity: product.quantity || 1,
                 });
-                console.log(res.data);
+                if (res.status === 200) {
+                    toast.success("Thêm vào giỏ hàng thành công ✅", {
+                        position: "top-right",
+                        autoClose: 1500,
+                    });
+                }
+                fetchOrders();
             } catch (error) {
-                console.log(error);
+                let errorMessage = "";
+                if (!error.response) {
+                    errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+                } else if (error.response.status === 404) {
+                    errorMessage = "API hiện tại đang bị lỗi :((";
+                } else if (error.response.data.message || error.response.data.errors) {
+                    errorMessage = error.response.data.message || error.response.data.errors[0];
+                } else {
+                    errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
+                }
+                setMessages(errorMessage);
+            } finally {
+                setIsLoading(false);
             }
         }
     };
@@ -170,7 +210,10 @@ const Detail_Product = () => {
                                         </div>
                                     </div>
                                     <div className="add-to-card__item add-to-card__btn--group">
-                                        <Button title={"Add to cart"} onClick={() => handleAddToCard(product?._id)} />
+                                        <Button
+                                            title={"Add to cart"}
+                                            onClick={() => handleAddToCard(product?._id, product)}
+                                        />
                                         <div className="add-to-card__heart">
                                             <img src={heart} alt="" className="add-to-card__heart-icon" />
                                         </div>

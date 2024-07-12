@@ -82,8 +82,8 @@ const Login = () => {
                 }}
             ></Box>
             <Loading isShow={loading} />
-            {/* Hiển thị messages */}
-            <ToastContainer />
+                {/* Hiển thị messages */}
+                <ToastContainer />
 
             <div className="login">
                 <div className="login__left">
