@@ -103,9 +103,12 @@
     position: relative;
     &__input {
         width: 100%;
-        padding: 12px 200px 12px 12px;
+        padding: 12px 80px 12px 12px;
         border-radius: 10px;
         border: 1px solid var(--border-input);
+        @include abstracts.screen(md) {
+            padding: 12px 80px 12px 12px;
+        }
     }
 
     &__input::placeholder {

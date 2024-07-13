@@ -54,7 +54,7 @@ const Register = () => {
                     autoClose: 1500,
                 });
                 setTimeout(() => {
-                    navigate("/");
+                    navigate("/login");
                 }, 2300);
             }
         } catch (error) {

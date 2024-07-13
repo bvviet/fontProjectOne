@@ -145,7 +145,7 @@ const Search = () => {
                     <img src={loadingIcon} alt="loading" className="top-action__icon icon top-action__icon-loading" />
                 )}
                 <button className="top-action__btn">
-                    <img src={search} alt="search" className="top-action__icon icon" />
+                    <img src={search} alt="search" className="top-action__icon icon top-action__icon-search" />
                 </button>
             </form>
         </Tippy>

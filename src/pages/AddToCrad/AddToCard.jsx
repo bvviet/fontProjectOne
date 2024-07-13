@@ -66,7 +66,6 @@ const AddToCard = () => {
                 },
                 backgroundColor: "var(--bg-addToCard)",
                 padding: "25px 0",
-                height: "100vh",
             }}
         >
             {/* Filter */}

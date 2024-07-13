@@ -11,6 +11,9 @@
     @include abstracts.screen(lg) {
         display: flex;
     }
+    @include abstracts.screen(md) {
+        padding: 7px 23px 7px 7px;
+    }
     input {
         padding: 0 20px;
         width: 350px;
@@ -19,12 +22,17 @@
         color: var(--text-color);
 
         @include abstracts.screen(xl) {
-            width: 200px;
+            width: 250px;
             padding: 0 6px;
         }
         @include abstracts.screen(md) {
-            width: 180px;
+            width: 150px;
             padding: 0 6px;
+        }
+    }
+    input::placeholder {
+        @include abstracts.screen(md) {
+            font-size: 1.3rem;
         }
     }
 }
@@ -36,6 +44,11 @@
     width: 14px;
     height: 14px;
     z-index: 8;
+    @include abstracts.screen(md) {
+        top: 11px;
+        width: 12px;
+        height: 12px;
+    }
 }
 
 .top-action__icon-loading {
@@ -45,6 +58,17 @@
     top: 25px;
     right: 59px;
     animation: spinner 0.8s linear infinite;
+    @include abstracts.screen(md) {
+        width: 15px;
+        height: 15px;
+        top: 18px;
+    }
+}
+
+.top-action__icon-search {
+    @include abstracts.screen(md) {
+        width: 18px;
+    }
 }
 
 @keyframes spinner {
@@ -87,16 +111,16 @@
 
     @include abstracts.screen(xl) {
         position: absolute;
-        right: -128px;
+        right: -153px;
         top: 69px;
-        width: 250px;
+        width: 307px;
         padding: 0 6px;
     }
     @include abstracts.screen(md) {
         position: absolute;
-        right: -115px;
+        right: -103px;
         top: 69px;
-        width: 230px;
+        width: 206px;
         padding: 0 6px;
     }
 }
