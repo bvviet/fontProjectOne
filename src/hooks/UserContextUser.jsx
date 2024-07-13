@@ -6,10 +6,11 @@ import PropTypes from "prop-types";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState([]);
     const [userId, setUserId] = useState("");
-    useEffect(() => {
-        const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+
+    const fetchToken = () => {
         if (token) {
             try {
                 const decoded = jwtDecode(token);
@@ -20,7 +21,11 @@ const UserProvider = ({ children }) => {
         } else {
             setUserId(null);
         }
-    }, []);
+    };
+
+    useEffect(() => {
+        fetchToken();
+    }, [token]);
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -36,7 +41,9 @@ const UserProvider = ({ children }) => {
         fetchUserId();
     }, [userId]);
 
-    return <UserContext.Provider value={userData}>{children}</UserContext.Provider>;
+    return (
+        <UserContext.Provider value={{ userData, setUserData, setUserId, fetchToken }}>{children}</UserContext.Provider>
+    );
 };
 
 UserProvider.propTypes = {

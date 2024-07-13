@@ -28,7 +28,7 @@ const Detail_Product = () => {
     const [product, setProduct] = useState(null);
 
     // Lấy thông tin người dùng
-    const userData = useContext(UserContext);
+    const {userData} = useContext(UserContext);
     useEffect(() => {
         setUser(userData);
     }, [userData]);

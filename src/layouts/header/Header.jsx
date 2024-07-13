@@ -51,7 +51,7 @@ export default function Header() {
     const navigate = useNavigate();
     const { total } = useContext(OrderContext);
     // Lấy thông tin người dùng
-    const userData = useContext(UserContext);
+    const { userData, setUserData, setUserId } = useContext(UserContext);
     useEffect(() => {
         setUser(userData);
     }, [userData]);
@@ -61,6 +61,8 @@ export default function Header() {
 
     // Đăng xuất
     const handleLogOut = () => {
+        setUserData([]);
+        setUserId("");
         localStorage.removeItem("token");
         navigate("/login");
     };

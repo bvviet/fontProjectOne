@@ -8,7 +8,7 @@ const OrderContext = createContext();
 const OrderProvider = ({ children }) => {
     const [user, setUser] = useState({});
     const [orders, setOrders] = useState([]);
-    const userData = useContext(UserContext);
+    const { userData } = useContext(UserContext);
 
     useEffect(() => {
         setUser(userData);

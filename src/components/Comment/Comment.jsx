@@ -13,11 +13,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { LoadingContext } from "../../hooks/LoadingContext";
 import { MessagesContext } from "../../hooks/MessagesContext";
-import LongMenu from "../MoreVertIcon/MoreVertIcon";
 
 const Comment = ({ productId }) => {
     // Lấy thông tin người dùng
-    const userData = useContext(UserContext);
+    const {userData} = useContext(UserContext);
     const { setIsLoading } = useContext(LoadingContext);
     const { setMessages } = useContext(MessagesContext);
     const [user, setUser] = useState({});
@@ -43,6 +42,7 @@ const Comment = ({ productId }) => {
     } = useForm();
 
     // Lấy bình luận theo id sản phẩm
+    useEffect(() => {});
     const fetchCommentDetail = async () => {
         try {
             const response = await axios.get(`https://project-one-navy.vercel.app/comment/${productId}`);
@@ -55,8 +55,7 @@ const Comment = ({ productId }) => {
     useEffect(() => {
         fetchCommentDetail();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [comment]);
-
+    }, []);
     // Thêm bình luận
     const onSubmit = async (data) => {
         try {
@@ -66,7 +65,7 @@ const Comment = ({ productId }) => {
                 url: "https://project-one-navy.vercel.app/comment",
                 data: {
                     productId: productId,
-                    userId: user?._id,
+                    userId: user._id,
                     content: data.content,
                     rating: ratingValue,
                 },
@@ -179,7 +178,7 @@ const Comment = ({ productId }) => {
                                     <h3 className="comment__top-heading">{value?.userId?.userName}</h3>
                                     <p className="comment__top-desc">{value?.content}</p>
                                 </div>
-                                {user?._id === value?.userId?._id ? <LongMenu /> : ""}
+                                {user?._id === value?.userId?._id ? <p>aa</p> : ""}
                             </section>
                             <div className="comment__bottom">
                                 <div className="comment__bottom__start-list">

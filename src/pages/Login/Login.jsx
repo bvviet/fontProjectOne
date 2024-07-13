@@ -16,11 +16,13 @@ import Button from "../../components/Button/Button";
 import Logo from "../../components/Logo/Logo";
 import { LoadingContext } from "../../hooks/LoadingContext.jsx";
 import Loading from "../../components/Loading/Loading.jsx";
+import { UserContext } from "../../hooks/UserContextUser.jsx";
 
 const Login = () => {
     const [messages, setMessages] = useState("");
     const navigate = useNavigate();
-    const { loading,setIsLoading } = useContext(LoadingContext);
+    const { loading, setIsLoading } = useContext(LoadingContext);
+    const { setUserData, fetchToken } = useContext(UserContext);
 
     const {
         register,
@@ -42,13 +44,14 @@ const Login = () => {
         setIsLoading(true);
         try {
             const response = await axios.post("https://project-one-navy.vercel.app/auth/login", data);
-            console.log(response.data.data);
+            setUserData(response.data.data);
             if (response.status === 200) {
                 toast.success("Đăng nhập thành công!", {
                     position: "top-right",
                     autoClose: 1500,
                 });
                 localStorage.setItem("token", response.data.token);
+                fetchToken();
                 setTimeout(() => {
                     navigate("/");
                 }, 2300);
@@ -82,8 +85,8 @@ const Login = () => {
                 }}
             ></Box>
             <Loading isShow={loading} />
-                {/* Hiển thị messages */}
-                <ToastContainer />
+            {/* Hiển thị messages */}
+            <ToastContainer />
 
             <div className="login">
                 <div className="login__left">
