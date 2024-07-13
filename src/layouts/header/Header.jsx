@@ -232,6 +232,15 @@ export default function Header() {
                                     <hr className="dialog__hr" />
                                     <ul className="dialog__list">
                                         <li className="dialog__item">
+                                            <Link to="/admin" className="dialog__link">
+                                                Trang quản trị
+                                            </Link>
+                                        </li>
+                                    </ul>
+
+                                    <hr className="dialog__hr" />
+                                    <ul className="dialog__list">
+                                        <li className="dialog__item">
                                             <p onClick={handleLogOut} className="dialog__link">
                                                 Đăng xuất
                                             </p>
