@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { Grid } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import PropTypes from "prop-types";
 
@@ -13,19 +12,19 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { LoadingContext } from "../../hooks/LoadingContext";
 import { MessagesContext } from "../../hooks/MessagesContext";
+import CommentItem from "./CommentItem";
 
 const Comment = ({ productId }) => {
-    // Lấy thông tin người dùng
-    const {userData} = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     const { setIsLoading } = useContext(LoadingContext);
     const { setMessages } = useContext(MessagesContext);
+
     const [user, setUser] = useState({});
     const [comment, setComment] = useState([]);
-
     const [visible, setVisible] = useState(false);
     const [ratingValue, setRatingValue] = useState(2.5);
 
-    // Lấy thong tin người dùng
+    // Lấy thông tin user
     useEffect(() => {
         setUser(userData);
     }, [userData]);
@@ -34,15 +33,7 @@ const Comment = ({ productId }) => {
         setRatingValue(newValue);
     };
 
-    // Tạo bình luận mới
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
     // Lấy bình luận theo id sản phẩm
-    useEffect(() => {});
     const fetchCommentDetail = async () => {
         try {
             const response = await axios.get(`https://project-one-navy.vercel.app/comment/${productId}`);
@@ -55,7 +46,15 @@ const Comment = ({ productId }) => {
     useEffect(() => {
         fetchCommentDetail();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [productId]);
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+
     // Thêm bình luận
     const onSubmit = async (data) => {
         try {
@@ -64,7 +63,7 @@ const Comment = ({ productId }) => {
                 method: "post",
                 url: "https://project-one-navy.vercel.app/comment",
                 data: {
-                    productId: productId,
+                    productId,
                     userId: user._id,
                     content: data.content,
                     rating: ratingValue,
@@ -75,8 +74,37 @@ const Comment = ({ productId }) => {
                     position: "top-right",
                     autoClose: 1500,
                 });
+                reset();
             }
             setVisible(false);
+            fetchCommentDetail();
+        } catch (error) {
+            let errorMessage = "";
+            if (!error.response) {
+                errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+            } else if (error.response.status === 404) {
+                errorMessage = "API hiện tại đang bị lỗi :((";
+            } else if (error.response.data.message || error.response.data.errors) {
+                errorMessage = error.response.data.message || error.response.data.errors[0];
+            } else {
+                errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
+            }
+            setMessages(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Xóa bình luận
+    const deleteComment = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/comment/${id}`);
+            if (response.status === 200) {
+                toast.success("Xóa bình luận thành công", {
+                    position: "top-right",
+                    autoClose: 1500,
+                });
+            }
             fetchCommentDetail();
         } catch (error) {
             let errorMessage = "";
@@ -127,7 +155,11 @@ const Comment = ({ productId }) => {
                                                     id=""
                                                     {...register("content", { required: true })}
                                                 ></textarea>
-                                                {errors.content && <span>This field is required</span>}
+                                                {errors.content && (
+                                                    <div style={{ color: "red", marginTop: "10px" }}>
+                                                        Không được để trống
+                                                    </div>
+                                                )}
                                             </div>
                                             <div>
                                                 <label htmlFor="">Đánh giá</label>
@@ -168,37 +200,7 @@ const Comment = ({ productId }) => {
             )}
 
             {/* Nội dung bình luận */}
-            <Grid container spacing={{ sm: "30px" }} columns={{ xs: 3, sm: 3, md: 6, lg: 9, xl: 9 }} style={{}}>
-                {comment.map((value) => (
-                    <Grid item xs={3} key={value._id}>
-                        <article className="comment__item">
-                            <section className="comment__top">
-                                <img src={value?.userId?.avatar} alt="" className="comment__top-avatar" />
-                                <div className="comment__top-info">
-                                    <h3 className="comment__top-heading">{value?.userId?.userName}</h3>
-                                    <p className="comment__top-desc">{value?.content}</p>
-                                </div>
-                                {user?._id === value?.userId?._id ? <p>aa</p> : ""}
-                            </section>
-                            <div className="comment__bottom">
-                                <div className="comment__bottom__start-list">
-                                    <Rating
-                                        name="read-only"
-                                        value={value?.rating}
-                                        precision={0.1}
-                                        size="large"
-                                        readOnly
-                                        sx={{
-                                            fontSize: "2.5rem",
-                                        }}
-                                    />
-                                </div>
-                                <p className="comment__bottom-review">( {value?.rating} ) Review</p>
-                            </div>
-                        </article>
-                    </Grid>
-                ))}
-            </Grid>
+            <CommentItem user={user} comment={comment} deleteComment={deleteComment} />
         </div>
     );
 };

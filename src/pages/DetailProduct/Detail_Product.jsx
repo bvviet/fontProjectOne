@@ -11,13 +11,13 @@ import around from "../../assets/icons/around.svg";
 import compare from "../../assets/icons/compare.svg";
 import buy from "../../assets/icons/buy.svg";
 import pickup from "../../assets/icons/pickup.svg";
-import heart from "../../assets/icons/heart.svg";
 import Button from "../../components/Button/Button";
 import Comment from "../../components/Comment/Comment";
 import { OrderContext } from "../../hooks/OrderContext";
 import { MessagesContext } from "../../hooks/MessagesContext";
 import { toast } from "react-toastify";
 import { LoadingContext } from "../../hooks/LoadingContext";
+import AddFavorite from "../../components/AddFavourite/AddFavourite";
 
 const Detail_Product = () => {
     const { id } = useParams();
@@ -26,9 +26,8 @@ const Detail_Product = () => {
     const { setMessages } = useContext(MessagesContext);
     const [user, setUser] = useState({});
     const [product, setProduct] = useState(null);
-
     // Lấy thông tin người dùng
-    const {userData} = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     useEffect(() => {
         setUser(userData);
     }, [userData]);
@@ -210,13 +209,13 @@ const Detail_Product = () => {
                                         </div>
                                     </div>
                                     <div className="add-to-card__item add-to-card__btn--group">
+                                        {/* Thêm vào giỏ hàng */}
                                         <Button
                                             title={"Add to cart"}
                                             onClick={() => handleAddToCard(product?._id, product)}
                                         />
-                                        <div className="add-to-card__heart">
-                                            <img src={heart} alt="" className="add-to-card__heart-icon" />
-                                        </div>
+                                        {/* Thêm vào yêu thích */}
+                                        <AddFavorite productId={product?._id} />
                                     </div>
                                 </div>
                             </div>

@@ -23,7 +23,7 @@ import product1 from "../../assets/images/product1.png";
 
 const Profile = () => {
     const [user, setUser] = useState({});
-    const userData = useContext(UserContext);
+    const {userData} = useContext(UserContext);
     useEffect(() => {
         setUser(userData);
     }, [userData]);
