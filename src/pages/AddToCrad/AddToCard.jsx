@@ -24,7 +24,7 @@ const AddToCard = () => {
         if (orderItemId) {
             try {
                 setIsLoading(true);
-                const res = await axios.delete(`http://localhost:3000/order/${orderItemId}`);
+                const res = await axios.delete(`https://project-one-navy.vercel.app/order/${orderItemId}`);
                 fetchOrders();
                 if (res.status === 200) {
                     toast.success("Xóa khỏi vào giỏ hàng thành công ✅", {

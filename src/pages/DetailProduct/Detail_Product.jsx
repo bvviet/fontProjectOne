@@ -66,7 +66,7 @@ const Detail_Product = () => {
         if (productId) {
             try {
                 setIsLoading(true);
-                const res = await axios.post(`http://localhost:3000/order/${user._id}`, {
+                const res = await axios.post(`https://project-one-navy.vercel.app/order/${user._id}`, {
                     productId: productId,
                     quantity: product.quantity || 1,
                 });

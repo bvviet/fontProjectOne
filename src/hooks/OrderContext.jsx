@@ -17,7 +17,7 @@ const OrderProvider = ({ children }) => {
     const fetchOrders = async () => {
         if (user?._id) {
             try {
-                const res = await axios.get(`http://localhost:3000/order/orders/${user?._id}`);
+                const res = await axios.get(`https://project-one-navy.vercel.app/order/orders/${user?._id}`);
                 setOrders(res.data.data);
             } catch (error) {
                 console.log(error);

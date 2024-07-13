@@ -98,7 +98,7 @@ const Comment = ({ productId }) => {
     // Xóa bình luận
     const deleteComment = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/comment/${id}`);
+            const response = await axios.delete(`https://project-one-navy.vercel.app/comment/${id}`);
             if (response.status === 200) {
                 toast.success("Xóa bình luận thành công", {
                     position: "top-right",

@@ -12,7 +12,7 @@ const AddFavorite = ({ productId }) => {
     // Thêm sản phẩm vào danh sách yêu thích
     const handleAddFavorite = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/favorite", {
+            const response = await axios.post("https://project-one-navy.vercel.app/favorite", {
                 productId: productId,
                 userId: userData._id,
             });
