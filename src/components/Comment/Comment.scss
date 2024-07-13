@@ -5,6 +5,7 @@
         background: var(--bg-detail-right);
         padding: 30px;
         border-radius: 16px;
+        margin: 10px 0;
     }
     &__title {
         color: var(--text-color);
@@ -49,7 +50,8 @@
                 font-size: 1.8rem;
             }
         }
-        &-desc {
+        &-desc,
+        &-delete {
             color: var(--text-color);
             font-size: 1.6rem;
             font-weight: 400;

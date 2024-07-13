@@ -49,7 +49,7 @@ export default function Header() {
     const [wrapper, setWrapper] = useState(false);
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-    const { total } = useContext(OrderContext);
+    const { total, sumQuantity } = useContext(OrderContext);
     // Lấy thông tin người dùng
     const { userData, setUserData, setUserId } = useContext(UserContext);
     useEffect(() => {
@@ -88,17 +88,17 @@ export default function Header() {
                                 <img src={close} alt="" className="close-left__icons" />
                             </button>
 
-                            <a href="#" className="close-btn">
+                            <Link to="/addToCard" className="close-btn">
                                 <img src={buy} alt="" className="close-btn__icons" />
                                 <span className="close-btn__title">Card</span>
-                                <span className="close-btn__qnt">3</span>
-                            </a>
+                                <span className="close-btn__qnt">{sumQuantity}</span>
+                            </Link>
 
-                            <a href="#" className="close-btn">
+                            <Link to="/favorite" className="close-btn">
                                 <img src={heart} alt="" className="close-btn__icons" />
                                 <span className="close-btn__title">Card</span>
                                 <span className="close-btn__qnt">3</span>
-                            </a>
+                            </Link>
                         </div>
                     </ListItemButton>
                 </ListItem>
@@ -168,16 +168,17 @@ export default function Header() {
                     {token && (
                         <div className="top-action">
                             <div className="top-action__group top-action__group-double">
-                                <button className="top-action__btn">
+                                <Link to={"/favorite"} className="top-action__btn">
                                     <img src={heart} alt="heart" className="top-action__icon icon" />
                                     <span className="top-action__title">03</span>
-                                </button>
+                                </Link>
                                 <div className="top-action__rectangle"></div>
                                 <Link to={"/addToCard"} className="top-action__btn">
                                     <img src={buy} alt="buy" className="top-action__icon icon" />
                                     <span className="top-action__title">${total}</span>
                                 </Link>
                             </div>
+
                             {/* Avatar */}
                             <div className="top-action__avatar">
                                 <img src={avatar} alt="" className="top-action__avatar-image" onClick={toggleDialog} />

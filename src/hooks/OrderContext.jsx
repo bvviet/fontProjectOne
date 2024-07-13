@@ -47,7 +47,6 @@ const OrderProvider = ({ children }) => {
         return total;
     };
     const sumQuantity = totalQuantity();
-    console.log(sumQuantity);
 
     return (
         <OrderContext.Provider value={{ orderItems, orders, total, sumQuantity, fetchOrders }}>

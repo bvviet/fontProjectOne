@@ -18,6 +18,7 @@ import Home from "./pages/Home/Home.jsx";
 import { LoadingProvider } from "./hooks/LoadingContext.jsx";
 import { OrderProvider } from "./hooks/OrderContext.jsx";
 import { MessagesProvider } from "./hooks/MessagesContext.jsx";
+import FavoriteProduct from "./pages/FavoriteProduct/FavoriteProduct.jsx";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/checkout" element={<Checkout />} />
                                 <Route path="/addToCard" element={<AddToCard />} />
+                                <Route path="/favorite" element={<FavoriteProduct />} />
                             </Route>
 
                             <Route path="/admin" element={<AdminLayout />}>

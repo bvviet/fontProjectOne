@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Grid, Rating } from "@mui/material";
 import AlertDialog from "../DeleteConfirm/Delete";
+import deleted from "../../assets/icons/delete.svg";
 
 const CommentItem = ({ user, comment, deleteComment }) => {
     return (
@@ -21,7 +22,9 @@ const CommentItem = ({ user, comment, deleteComment }) => {
                             {user?._id === value?.userId?._id ? (
                                 <div style={{ marginLeft: "auto", cursor: "pointer" }}>
                                     <AlertDialog handleDelete={() => deleteComment(value._id)}>
-                                        <div>Xóa</div>
+                                        <div className="comment__top-delete">
+                                            <img src={deleted} alt="" />
+                                        </div>
                                     </AlertDialog>
                                 </div>
                             ) : (
