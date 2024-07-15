@@ -19,36 +19,39 @@ import { LoadingProvider } from "./hooks/LoadingContext.jsx";
 import { OrderProvider } from "./hooks/OrderContext.jsx";
 import { MessagesProvider } from "./hooks/MessagesContext.jsx";
 import FavoriteProduct from "./pages/FavoriteProduct/FavoriteProduct.jsx";
+import { FavoriteProvider } from "./hooks/FavoriteContext.jsx";
 
 function App() {
     return (
         <UserProvider>
             <LoadingProvider>
-                <OrderProvider>
-                    <MessagesProvider>
-                        <Routes>
-                            <Route path="/" element={<Default_layout />}>
-                                <Route index element={<Home />} />
-                                <Route path="product/:id" element={<Detail_Product />} />
-                                <Route path="/profile" element={<Profile />} />
-                                <Route path="/checkout" element={<Checkout />} />
-                                <Route path="/addToCard" element={<AddToCard />} />
-                                <Route path="/favorite" element={<FavoriteProduct />} />
-                            </Route>
+                <MessagesProvider>
+                    <OrderProvider>
+                        <FavoriteProvider>
+                            <Routes>
+                                <Route path="/" element={<Default_layout />}>
+                                    <Route index element={<Home />} />
+                                    <Route path="product/:id" element={<Detail_Product />} />
+                                    <Route path="/profile" element={<Profile />} />
+                                    <Route path="/checkout" element={<Checkout />} />
+                                    <Route path="/addToCard" element={<AddToCard />} />
+                                    <Route path="/favorite" element={<FavoriteProduct />} />
+                                </Route>
 
-                            <Route path="/admin" element={<AdminLayout />}>
-                                <Route index element={<p>Hello</p>}></Route>
-                                <Route path="list" element={<ListProduct />}></Route>
-                                <Route path="add" element={<AddProduct />}></Route>
-                                <Route path="update/:id" element={<UpdateProduct />}></Route>
-                            </Route>
+                                <Route path="/admin" element={<AdminLayout />}>
+                                    <Route index element={<p>Hello</p>}></Route>
+                                    <Route path="list" element={<ListProduct />}></Route>
+                                    <Route path="add" element={<AddProduct />}></Route>
+                                    <Route path="update/:id" element={<UpdateProduct />}></Route>
+                                </Route>
 
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </MessagesProvider>
-                </OrderProvider>
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/register" element={<Register />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </FavoriteProvider>
+                    </OrderProvider>
+                </MessagesProvider>
             </LoadingProvider>
         </UserProvider>
     );

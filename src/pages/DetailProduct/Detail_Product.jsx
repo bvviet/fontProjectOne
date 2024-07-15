@@ -3,7 +3,6 @@ import { Box, Grid } from "@mui/material";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { UserContext } from "../../hooks/UserContextUser";
 
 import start from "../../assets/icons/start.svg";
 import aroundRight from "../../assets/icons/aroundRight.svg";
@@ -11,27 +10,19 @@ import around from "../../assets/icons/around.svg";
 import compare from "../../assets/icons/compare.svg";
 import buy from "../../assets/icons/buy.svg";
 import pickup from "../../assets/icons/pickup.svg";
-import Button from "../../components/Button/Button";
 import Comment from "../../components/Comment/Comment";
-import { OrderContext } from "../../hooks/OrderContext";
 import { MessagesContext } from "../../hooks/MessagesContext";
-import { toast } from "react-toastify";
 import { LoadingContext } from "../../hooks/LoadingContext";
 import AddFavorite from "../../components/AddFavourite/AddFavourite";
+import ButtonAddToCard from "./ButtonAddToCard";
 
 const Detail_Product = () => {
     const { id } = useParams();
-    const { fetchOrders } = useContext(OrderContext);
     const { setIsLoading } = useContext(LoadingContext);
     const { setMessages } = useContext(MessagesContext);
-    const [user, setUser] = useState({});
     const [product, setProduct] = useState(null);
-    // Lấy thông tin người dùng
-    const { userData } = useContext(UserContext);
-    useEffect(() => {
-        setUser(userData);
-    }, [userData]);
 
+    // Lấy chi tiết sản phẩm
     useEffect(() => {
         if (id) {
             const fetchDetail = async () => {
@@ -59,41 +50,6 @@ const Detail_Product = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
-
-    // Thêm sản phẩm vào giỏ hàng
-    const handleAddToCard = async (productId, product) => {
-        console.log(productId);
-        if (productId) {
-            try {
-                setIsLoading(true);
-                const res = await axios.post(`https://project-one-navy.vercel.app/order/${user._id}`, {
-                    productId: productId,
-                    quantity: product.quantity || 1,
-                });
-                if (res.status === 200) {
-                    toast.success("Thêm vào giỏ hàng thành công ✅", {
-                        position: "top-right",
-                        autoClose: 1500,
-                    });
-                }
-                fetchOrders();
-            } catch (error) {
-                let errorMessage = "";
-                if (!error.response) {
-                    errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
-                } else if (error.response.status === 404) {
-                    errorMessage = "API hiện tại đang bị lỗi :((";
-                } else if (error.response.data.message || error.response.data.errors) {
-                    errorMessage = error.response.data.message || error.response.data.errors[0];
-                } else {
-                    errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
-                }
-                setMessages(errorMessage);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-    };
 
     return (
         <Box
@@ -210,10 +166,7 @@ const Detail_Product = () => {
                                     </div>
                                     <div className="add-to-card__item add-to-card__btn--group">
                                         {/* Thêm vào giỏ hàng */}
-                                        <Button
-                                            title={"Add to cart"}
-                                            onClick={() => handleAddToCard(product?._id, product)}
-                                        />
+                                        <ButtonAddToCard productId={product?._id} product={product} />
                                         {/* Thêm vào yêu thích */}
                                         <AddFavorite productId={product?._id} />
                                     </div>

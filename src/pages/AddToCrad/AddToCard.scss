@@ -137,6 +137,7 @@
         color: var(--color-addToCard-heading);
         @include abstracts.screen(md) {
             padding: 10px 16px;
+            width: 110px;
         }
     }
 

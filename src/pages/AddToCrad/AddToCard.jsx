@@ -2,7 +2,6 @@ import { Box, Grid } from "@mui/material";
 import "./AddToCard.scss";
 
 import aroundRight from "../../assets/icons/aroundRight.svg";
-import heart from "../../assets/icons/heart.svg";
 import deleted from "../../assets/icons/delete.svg";
 import giftAdd from "../../assets/icons/giftAdd.svg";
 import aroundLeft from "../../assets/icons/aroundLeft.svg";
@@ -14,6 +13,7 @@ import { LoadingContext } from "../../hooks/LoadingContext";
 import { MessagesContext } from "../../hooks/MessagesContext";
 import { toast } from "react-toastify";
 import AlertDialog from "../../components/DeleteConfirm/Delete";
+import AddFavorite from "../../components/AddFavourite/AddFavourite";
 
 const AddToCard = () => {
     const { orderItems, orders, total, sumQuantity, fetchOrders } = useContext(OrderContext);
@@ -108,7 +108,7 @@ const AddToCard = () => {
                         <div key={item?._id}>
                             <section className="add-item">
                                 <div className="add-item__image">
-                                    <img src={item.productId?.imageURL} alt="" />
+                                    <img src={item.productId?.imageURL} alt="" style={{ borderRadius: "5px" }} />
                                 </div>
                                 {/*  */}
                                 <div className="add-item__main">
@@ -134,7 +134,7 @@ const AddToCard = () => {
                                         </form>
                                         <div className="product-option__icon">
                                             <div className="product-option__icon-item">
-                                                <img src={heart} alt="heart" />
+                                                <AddFavorite productId={item.productId._id} />
                                                 Save
                                             </div>
                                             <AlertDialog handleDelete={() => handleDeleteOrderItem(item?._id)}>

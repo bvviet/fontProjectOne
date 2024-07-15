@@ -1,10 +1,60 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import aroundRight from "../../assets/icons/aroundRight.svg";
-import heart from "../../assets/icons/heart.svg";
 import deleted from "../../assets/icons/delete.svg";
-import giftAdd from "../../assets/icons/giftAdd.svg";
 import aroundLeft from "../../assets/icons/aroundLeft.svg";
+import { useContext, useEffect, useState } from "react";
+import { LoadingContext } from "../../hooks/LoadingContext";
+import { MessagesContext } from "../../hooks/MessagesContext";
+import axios from "axios";
+import ButtonAddToCard from "../DetailProduct/ButtonAddToCard";
+import AlertDialog from "../../components/DeleteConfirm/Delete";
+import { toast } from "react-toastify";
+import { FavoriteContext } from "../../hooks/FavoriteContext";
+import AddFavorite from "../../components/AddFavourite/AddFavourite";
+
 const FavoriteProduct = () => {
+    const { setIsLoading } = useContext(LoadingContext);
+    const { setMessages } = useContext(MessagesContext);
+    const { fetchDetail, products } = useContext(FavoriteContext);
+    const [productsFavorite, setProductsFavorite] = useState();
+
+    // Xóa sản phẩm yêu thích
+    const handleDeleteOrderItem = async (productId) => {
+        if (productId) {
+            try {
+                setIsLoading(true);
+                const res = await axios.delete(`http://localhost:3000/favorite/${productId}`);
+                fetchDetail();
+                if (res.status === 200) {
+                    toast.success("Xóa sản phẩm yêu thích thành công", {
+                        position: "top-right",
+                        autoClose: 1500,
+                    });
+                }
+            } catch (error) {
+                let errorMessage = "";
+                if (!error.response) {
+                    errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
+                } else if (error.response.status === 404) {
+                    errorMessage = "API hiện tại đang bị lỗi :((";
+                } else if (error.response.data.message || error.response.data.errors) {
+                    errorMessage = error.response.data.message || error.response.data.errors[0];
+                } else {
+                    errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
+                }
+                setMessages(errorMessage);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        setProductsFavorite(products.length);
+    }, [products]);
+
+    console.log(productsFavorite);
+
     return (
         <Box
             sx={{
@@ -17,7 +67,6 @@ const FavoriteProduct = () => {
                 },
                 backgroundColor: "var(--bg-addToCard)",
                 padding: "25px 0",
-                height: "100vh",
             }}
         >
             {/* Filter */}
@@ -54,114 +103,71 @@ const FavoriteProduct = () => {
                 className="add-list"
             >
                 {/* Left */}
-                <Grid item xs={4.3} className="add-left">
+                <Grid item xs={6} className="add-left">
                     {/* Sản phẩm */}
+                    {products.length > 0 ? (
+                        products.map((item) => (
+                            <div key={item._id}>
+                                <section className="add-item">
+                                    <div className="add-item__image">
+                                        <img src={item.productId?.imageURL} alt="" style={{ borderRadius: "5px" }} />
+                                    </div>
+                                    {/*  */}
+                                    <div className="add-item__main">
+                                        <div className="add-item__title">
+                                            <h1 className="add-item__heading">{item.productId?.name}</h1>
+                                            <p className="add-item__price">${item.productId.price}</p>
+                                        </div>
+                                        <div className="add-item__stock">${item.productId?.price} | In Stock</div>
+                                        <div className="product-option">
+                                            <form className="product-option__form">
+                                                <select name="" id="" className="product-option__select">
+                                                    <option value="LavAzza" className="product-option__select-option">
+                                                        LavAzza
+                                                    </option>
+                                                </select>
 
-                    <div>
-                        <section className="add-item">
-                            <div className="add-item__image">
-                                <img src="" alt="" />
-                            </div>
-                            {/*  */}
-                            <div className="add-item__main">
-                                <div className="add-item__title">
-                                    <h1 className="add-item__heading">San pham 1</h1>
-                                    <p className="add-item__price">123</p>
-                                </div>
-                                <div className="add-item__stock">$999 | In Stock</div>
-                                <div className="product-option">
-                                    <form className="product-option__form">
-                                        <select name="" id="" className="product-option__select">
-                                            <option value="LavAzza" className="product-option__select-option">
-                                                LavAzza
-                                            </option>
-                                        </select>
-                                        <div className="product-option__quantity">
-                                            <input type="number" defaultValue={7} style={{ width: "38px" }} />
-                                        </div>
-                                    </form>
-                                    <div className="product-option__icon">
-                                        <div className="product-option__icon-item">
-                                            <img src={heart} alt="heart" />
-                                            Save
-                                        </div>
-                                        <div className="product-option__icon-item">
-                                            <img src={deleted} alt="" />
-                                            Delete
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: "30px",
+                                                    }}
+                                                >
+                                                    <AddFavorite productId={item?.productId._id} />
+                                                    <AlertDialog handleDelete={() => handleDeleteOrderItem(item?._id)}>
+                                                        <div className="product-option__icon-item">
+                                                            <img src={deleted} alt="" />
+                                                            Delete
+                                                        </div>
+                                                    </AlertDialog>
+                                                </div>
+                                            </form>
+                                            <div className="product-option__icon">
+                                                <ButtonAddToCard productId={item.productId._id} product={item} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </section>
+                                <div className="add__dot"></div>
                             </div>
-                        </section>
-                        <div className="add__dot"></div>
-                    </div>
+                        ))
+                    ) : (
+                        <div>Loading ...</div>
+                    )}
 
                     {/* Bottom */}
-                    <div className="addLeft-bottom">
+                    <div className="addLeft-bottom" style={{ marginTop: "50px" }}>
                         <div className="addLeft-bottom__left">
                             <img src={aroundLeft} alt="" />
                             Continue Shopping
                         </div>
-                        <div className="addLeft-bottom__list">
-                            <div className="addLeft-bottom__items">
-                                <p className="addLeft-bottom__item">Subtotal:</p>
-                                <p className="addLeft-bottom__item">88</p>
-                            </div>
-                            <div className="addLeft-bottom__items">
-                                <p className="addLeft-bottom__item">Shipping:</p>
-                                <p className="addLeft-bottom__item">$10.00</p>
-                            </div>
-                            <div className="add__dot "></div>
-                            <div className="addLeft-bottom__items">
-                                <p className="addLeft-bottom__total">Total:</p>
-                                <p className="addLeft-bottom__total">767</p>
-                            </div>
-                        </div>
+                        <div className="addLeft-bottom__list"></div>
                     </div>
-                </Grid>
-                {/* Right */}
-                <Grid item xs={1.7} className="add-right">
-                    <section className="add-right__top">
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">
-                                Subtotal <span style={{ fontWeight: "400" }}>(items)</span>
-                            </p>
-                            <p className="add-right__subtotal-right">a9</p>
-                        </div>
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">
-                                Price <span style={{ fontWeight: "400" }}>(Total)</span>
-                            </p>
-                            <p className="add-right__subtotal-right">8888</p>
-                        </div>
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">Shipping</p>
-                            <p className="add-right__subtotal-right">$10.00</p>
-                        </div>
-                        <div className="add__dot add__dot-right"></div>
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">Estimated Total</p>
-                            <p className="add-right__subtotal-right">$999</p>
-                        </div>
-
-                        <div className="add-btn">
-                            <Button title="Continue to checkout" />
-                        </div>
-                    </section>
-
-                    {/* Gift */}
-                    <section className="add-gift">
-                        <div className="add-gift__image">
-                            <img src={giftAdd} alt="" />
-                        </div>
-                        <div className="add-gift__text">
-                            <p className="add-gift__title">Send this order as a gift.</p>
-                            <p className="add-gift__desc">Available items will be shipped to your gift recipient.</p>
-                        </div>
-                    </section>
                 </Grid>
             </Grid>
         </Box>
     );
 };
+
 export default FavoriteProduct;

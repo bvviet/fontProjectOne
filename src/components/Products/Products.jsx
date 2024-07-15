@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import "./Products.scss";
 import axios from "axios";
 import PropTypes from "prop-types";
-import heart from "../../assets/icons/heart.svg";
 import start from "../../assets/icons/start.svg";
 import { useEffect, useState } from "react";
+import AddFavorite from "../AddFavourite/AddFavourite";
 
 const ProductItem = ({ product }) => {
     const { ref, inView } = useInView({
@@ -23,7 +23,7 @@ const ProductItem = ({ product }) => {
                         {inView && <img src={product.imageURL} alt="" className="product-item__thumb" />}
                     </Link>
                     <div className="product-item__heart">
-                        <img src={heart} alt="" />
+                        <AddFavorite productId={product._id} />
                     </div>
                 </div>
                 <h3 className="product-item__title">{product.name}</h3>

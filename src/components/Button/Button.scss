@@ -14,4 +14,8 @@
     @include abstracts.screen(lg) {
         padding: 10px 30px;
     }
+    @include abstracts.screen(md) {
+        padding: 8px 10px;
+    }
+
 }

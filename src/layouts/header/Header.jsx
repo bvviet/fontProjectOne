@@ -20,6 +20,7 @@ import around from "../../assets/icons/around.svg";
 import Logo from "../../components/Logo/Logo";
 import Search from "../../components/Search/Search";
 import { OrderContext } from "../../hooks/OrderContext";
+import { FavoriteContext } from "../../hooks/FavoriteContext";
 
 const NavBar = () => (
     <ul className="navbar">
@@ -45,13 +46,15 @@ const NavBar = () => (
 );
 
 export default function Header() {
+    const { total, sumQuantity } = useContext(OrderContext);
+    const { userData, setUserData, setUserId } = useContext(UserContext);
+    const { productsFavoriteLength } = useContext(FavoriteContext);
+
     const [open, setOpen] = useState(false);
     const [wrapper, setWrapper] = useState(false);
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-    const { total, sumQuantity } = useContext(OrderContext);
     // Lấy thông tin người dùng
-    const { userData, setUserData, setUserId } = useContext(UserContext);
     useEffect(() => {
         setUser(userData);
     }, [userData]);
@@ -97,7 +100,7 @@ export default function Header() {
                             <Link to="/favorite" className="close-btn">
                                 <img src={heart} alt="" className="close-btn__icons" />
                                 <span className="close-btn__title">Card</span>
-                                <span className="close-btn__qnt">3</span>
+                                <span className="close-btn__qnt">{productsFavoriteLength}</span>
                             </Link>
                         </div>
                     </ListItemButton>
@@ -170,7 +173,7 @@ export default function Header() {
                             <div className="top-action__group top-action__group-double">
                                 <Link to={"/favorite"} className="top-action__btn">
                                     <img src={heart} alt="heart" className="top-action__icon icon" />
-                                    <span className="top-action__title">03</span>
+                                    <span className="top-action__title">{productsFavoriteLength}</span>
                                 </Link>
                                 <div className="top-action__rectangle"></div>
                                 <Link to={"/addToCard"} className="top-action__btn">
