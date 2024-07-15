@@ -17,7 +17,7 @@ const FavoriteProvider = ({ children }) => {
     const fetchDetail = useCallback(async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get(`http://localhost:3000/favorite/${userData._id}`);
+            const response = await axios.get(`https://project-one-navy.vercel.app/favorite/${userData._id}`);
             setProducts(response.data.favorites);
         } catch (error) {
             let errorMessage = "";

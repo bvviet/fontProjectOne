@@ -23,7 +23,7 @@ const FavoriteProduct = () => {
         if (productId) {
             try {
                 setIsLoading(true);
-                const res = await axios.delete(`http://localhost:3000/favorite/${productId}`);
+                const res = await axios.delete(`https://project-one-navy.vercel.app/favorite/${productId}`);
                 fetchDetail();
                 if (res.status === 200) {
                     toast.success("Xóa sản phẩm yêu thích thành công", {
