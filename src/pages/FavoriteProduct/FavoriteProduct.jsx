@@ -67,6 +67,7 @@ const FavoriteProduct = () => {
                 },
                 backgroundColor: "var(--bg-addToCard)",
                 padding: "25px 0",
+                minHeight: "100vh",
             }}
         >
             {/* Filter */}
