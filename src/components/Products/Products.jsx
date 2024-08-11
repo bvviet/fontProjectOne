@@ -3,11 +3,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 import "./Products.scss";
-import axios from "axios";
 import PropTypes from "prop-types";
 import start from "../../assets/icons/start.svg";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import AddFavorite from "../AddFavourite/AddFavourite";
+import { ProductContext } from "../../contexts/productsCotext";
 
 const ProductItem = ({ product }) => {
     const { ref, inView } = useInView({
@@ -51,20 +51,8 @@ ProductItem.propTypes = {
 };
 
 const Products = () => {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get("https://project-one-navy.vercel.app/product");
-                setProducts(response.data.data);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        };
-
-        fetchProducts();
-    }, []);
+    const { products } = useContext(ProductContext);
+    console.log(products);
 
     return (
         <div className="product">
@@ -76,9 +64,9 @@ const Products = () => {
                     columnSpacing={{ sm: "30px" }}
                     columns={{ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }}
                 >
-                    {products.map((product) => (
-                        <ProductItem key={product._id} product={product} />
-                    ))}
+                    {products.length > 0
+                        ? products.map((product) => <ProductItem key={product._id} product={product} />)
+                        : <p style={{margin:"20px 0", fontWeight:"600", fontSize:"1.5vw"}}>không có sản phẩm nào.</p>}
                 </Grid>
             </Box>
         </div>

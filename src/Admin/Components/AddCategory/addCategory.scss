@@ -1,0 +1,17 @@
+.add-formCategories {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+    &__item {
+        width: 400px;
+        &-name {
+            width: 100%;
+            font-size: 2rem;
+        }
+    }
+}
+.button-form {
+    width: 100px;
+    height: 40px;
+}

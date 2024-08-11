@@ -27,22 +27,25 @@ const UserProvider = ({ children }) => {
         fetchToken();
     }, [token]);
 
-    useEffect(() => {
-        const fetchUserId = async () => {
-            if (userId) {
-                try {
-                    const response = await axios.get(`https://project-one-navy.vercel.app/auth/${userId}`);
-                    setUserData(response.data.data);
-                } catch (error) {
-                    console.error("Lỗi khi fetch user:", error.message);
-                }
+    const fetchUserId = async () => {
+        if (userId) {
+            try {
+                const response = await axios.get(`https://project-one-navy.vercel.app/auth/${userId}`);
+                setUserData(response.data.data);
+            } catch (error) {
+                console.error("Lỗi khi fetch user:", error.message);
             }
-        };
+        }
+    };
+
+    useEffect(() => {
         fetchUserId();
     }, [userId]);
 
     return (
-        <UserContext.Provider value={{ userData, setUserData, setUserId, fetchToken }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ userData, setUserData, setUserId, fetchToken, fetchUserId }}>
+            {children}
+        </UserContext.Provider>
     );
 };
 

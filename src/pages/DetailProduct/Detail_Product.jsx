@@ -21,6 +21,7 @@ const Detail_Product = () => {
     const { setIsLoading } = useContext(LoadingContext);
     const { setMessages } = useContext(MessagesContext);
     const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
     // Lấy chi tiết sản phẩm
     useEffect(() => {
@@ -129,6 +130,17 @@ const Detail_Product = () => {
                                         <button className="detail-btn__item">Medium</button>
                                         <button className="detail-btn__item">Large</button>
                                     </div>
+
+                                    <div className="detail-select__group">
+                                        <div className="detail-select__item">
+                                            <input
+                                                type="number"
+                                                onChange={(e) => setQuantity(e.target.value)}
+                                                className="detail-select__gam"
+                                                value={quantity}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                                 {/*  */}
                             </div>
@@ -166,7 +178,7 @@ const Detail_Product = () => {
                                     </div>
                                     <div className="add-to-card__item add-to-card__btn--group">
                                         {/* Thêm vào giỏ hàng */}
-                                        <ButtonAddToCard productId={product?._id} product={product} />
+                                        <ButtonAddToCard productId={product?._id} quantity={quantity} />
                                         {/* Thêm vào yêu thích */}
                                         <AddFavorite productId={product?._id} />
                                     </div>

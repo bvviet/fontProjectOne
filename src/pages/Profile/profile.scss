@@ -1,7 +1,6 @@
 @use "../../assets/scss/abstracts/mixins" as abstracts;
 
 .content-profile {
-    margin-top: 30px;
     @include abstracts.screen(md) {
         display: block;
     }
@@ -93,6 +92,9 @@
         padding: 30px;
         border-radius: 20px;
         box-shadow: 0px 20px 60px 10px rgba(237, 237, 246, 0.2);
+        @include abstracts.screen(md) {
+            margin-top: 30px;
+        }
     }
 }
 

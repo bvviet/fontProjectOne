@@ -22,6 +22,7 @@
     margin-top: 20px;
     background: var(--bg-cate__item);
     border-radius: 16px;
+    cursor: pointer;
     &__thumb {
         width: 116px;
         height: 116px;
@@ -38,6 +39,20 @@
             height: 88px;
         }
     }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 150%;
+        color: var(--text-color);
+        @include abstracts.screen(xl) {
+            font-size: 1.5rem;
+        }
+        @include abstracts.screen(sm) {
+            font-size: 1.4rem;
+        }
+    }
+
     &__price {
         color: var(--color-cate__price);
         font-size: 2.2rem;
@@ -61,5 +76,8 @@
         @include abstracts.screen(sm) {
             font-size: 1.4rem;
         }
+    }
+    &__active {
+        background: rgb(207, 206, 206);
     }
 }

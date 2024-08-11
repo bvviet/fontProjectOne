@@ -40,6 +40,24 @@ const Sidebar = () => {
                 </li>
                 <li className="sidebar__item">
                     <NavLink
+                        to="/admin/categories/list"
+                        className={({ isActive }) => `sidebar__link ${isActive ? "sidebar__link--active" : ""}`}
+                    >
+                        <img src="" alt="" />
+                        Danh sách danh mục
+                    </NavLink>
+                </li>
+                <li className="sidebar__item">
+                    <NavLink
+                        to="/admin/categories/add"
+                        className={({ isActive }) => `sidebar__link ${isActive ? "sidebar__link--active" : ""}`}
+                    >
+                        <img src="" alt="" />
+                        Thêm danh mục
+                    </NavLink>
+                </li>
+                <li className="sidebar__item">
+                    <NavLink
                         to="/admin/users"
                         className={({ isActive }) => `sidebar__link ${isActive ? "sidebar__link--active" : ""}`}
                     >

@@ -8,7 +8,7 @@ import { OrderContext } from "../../hooks/OrderContext";
 import { UserContext } from "../../hooks/UserContextUser";
 
 // eslint-disable-next-line react/prop-types
-const ButtonAddToCard = ({ productId, product }) => {
+const ButtonAddToCard = ({ productId, quantity }) => {
     const { setIsLoading } = useContext(LoadingContext);
     const { setMessages } = useContext(MessagesContext);
     const { fetchOrders } = useContext(OrderContext);
@@ -26,7 +26,7 @@ const ButtonAddToCard = ({ productId, product }) => {
                 const res = await axios.post(`https://project-one-navy.vercel.app/order/${user._id}`, {
                     productId: productId,
                     // eslint-disable-next-line react/prop-types
-                    quantity: product.quantity || 1,
+                    quantity: quantity || 1,
                 });
                 if (res.status === 200) {
                     toast.success("Thêm vào giỏ hàng thành công ✅", {

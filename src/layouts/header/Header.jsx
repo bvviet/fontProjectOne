@@ -1,5 +1,5 @@
 import "./Header.scss";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -51,8 +51,11 @@ export default function Header() {
     const { productsFavoriteLength } = useContext(FavoriteContext);
 
     const [open, setOpen] = useState(false);
-    const [wrapper, setWrapper] = useState(false);
     const [user, setUser] = useState(null);
+    const [isShowProfile, setIsShowProfile] = useState(false);
+    const dialogRef = useRef(null);
+    console.log(isShowProfile);
+
     const navigate = useNavigate();
     // Lấy thông tin người dùng
     useEffect(() => {
@@ -73,11 +76,6 @@ export default function Header() {
     // Ẩn hiện menu điện thoại
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
-    };
-
-    // Ẩn hiện popper profile
-    const toggleDialog = () => {
-        setWrapper(!wrapper);
     };
 
     // Nội dung menu điện thoại
@@ -118,6 +116,19 @@ export default function Header() {
             </List>
         </Box>
     );
+
+    // Xử lý sự kiện click ngoài dialog
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+                setIsShowProfile(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [dialogRef]);
 
     return (
         <header className="header">
@@ -183,79 +194,88 @@ export default function Header() {
                             </div>
 
                             {/* Avatar */}
-                            <div className="top-action__avatar">
-                                <img src={avatar} alt="" className="top-action__avatar-image" onClick={toggleDialog} />
+                            <div className="top-action__avatar" onClick={() => setIsShowProfile(true)}>
+                                <img
+                                    src={user?.avatar ? user?.avatar : avatar}
+                                    alt=""
+                                    className="top-action__avatar-image"
+                                />
+                                {isShowProfile && (
+                                    /* Dialog */
+                                    <div ref={dialogRef} id="dialog" className={" dialog"}>
+                                        <div className="dialog__info">
+                                            <img
+                                                src={user?.avatar ? user?.avatar : avatar}
+                                                alt=""
+                                                className="dialog__avatar"
+                                            />
+                                            <p className="dialog__name">{user?.userName}</p>
+                                        </div>
 
-                                {/* Dialog */}
-                                <div id="dialog" className={`${wrapper ? "" : "dialog__hidden"} dialog`}>
-                                    <div className="dialog__info">
-                                        <img src={avatar} alt="" className="dialog__avatar" />
-                                        <p className="dialog__name">{user?.userName}</p>
+                                        <hr className="dialog__hr" />
+
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <Link to="/profile" className="dialog__link">
+                                                    Trang cá nhân
+                                                </Link>
+                                            </li>
+                                        </ul>
+
+                                        <hr className="dialog__hr" />
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <Link to="#!" className="dialog__link">
+                                                    Viết blog
+                                                </Link>
+                                                <Link to="#!" className="dialog__link">
+                                                    Bài viết của tôi
+                                                </Link>
+                                            </li>
+                                        </ul>
+
+                                        <hr className="dialog__hr" />
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <Link to="#!" className="dialog__link">
+                                                    Bài viết đã lưu
+                                                </Link>
+                                            </li>
+                                        </ul>
+
+                                        <hr className="dialog__hr" />
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <Link to="#!" className="dialog__link">
+                                                    Cài đặt
+                                                </Link>
+                                            </li>
+                                        </ul>
+
+                                        <hr className="dialog__hr" />
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <Link to="/admin" className="dialog__link">
+                                                    Trang quản trị
+                                                </Link>
+                                            </li>
+                                        </ul>
+
+                                        <hr className="dialog__hr" />
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <p onClick={handleLogOut} className="dialog__link">
+                                                    Đăng xuất
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <hr className="dialog__hr" />
+                                        {/* Light Dark */}
+                                        <div className="dark-mode">
+                                            <DarkMode />
+                                        </div>
                                     </div>
-
-                                    <hr className="dialog__hr" />
-
-                                    <ul className="dialog__list">
-                                        <li className="dialog__item">
-                                            <Link to="/profile" className="dialog__link">
-                                                Trang cá nhân
-                                            </Link>
-                                        </li>
-                                    </ul>
-
-                                    <hr className="dialog__hr" />
-                                    <ul className="dialog__list">
-                                        <li className="dialog__item">
-                                            <Link to="#!" className="dialog__link">
-                                                Viết blog
-                                            </Link>
-                                            <Link to="#!" className="dialog__link">
-                                                Bài viết của tôi
-                                            </Link>
-                                        </li>
-                                    </ul>
-
-                                    <hr className="dialog__hr" />
-                                    <ul className="dialog__list">
-                                        <li className="dialog__item">
-                                            <Link to="#!" className="dialog__link">
-                                                Bài viết đã lưu
-                                            </Link>
-                                        </li>
-                                    </ul>
-
-                                    <hr className="dialog__hr" />
-                                    <ul className="dialog__list">
-                                        <li className="dialog__item">
-                                            <Link to="#!" className="dialog__link">
-                                                Cài đặt
-                                            </Link>
-                                        </li>
-                                    </ul>
-
-                                    <hr className="dialog__hr" />
-                                    <ul className="dialog__list">
-                                        <li className="dialog__item">
-                                            <Link to="/admin" className="dialog__link">
-                                                Trang quản trị
-                                            </Link>
-                                        </li>
-                                    </ul>
-
-                                    <hr className="dialog__hr" />
-                                    <ul className="dialog__list">
-                                        <li className="dialog__item">
-                                            <p onClick={handleLogOut} className="dialog__link">
-                                                Đăng xuất
-                                            </p>
-                                        </li>
-                                    </ul>
-                                    <hr className="dialog__hr" />
-                                    {/* Light Dark */}
-                                    <div className="dark-mode">
-                                        <DarkMode />
-                                    </div>
-                                </div>
+                                )}
                             </div>
                         </div>
                     )}

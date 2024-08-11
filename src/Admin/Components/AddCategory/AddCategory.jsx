@@ -1,12 +1,8 @@
-import "./addProduct.scss";
+import "./addCategory.scss";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -21,10 +17,10 @@ const CustomTextField = styled(TextField)({
     background: "transparent",
 });
 
-const AddProduct = () => {
+const AddCategory = () => {
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState("");
-    const { categories } = useContext(CategoryContext);
+    const { fetchCategories } = useContext(CategoryContext);
 
     useEffect(() => {
         if (messages) {
@@ -45,8 +41,9 @@ const AddProduct = () => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axios.post("http://localhost:3000/product", data);
+            const response = await axios.post("http://localhost:3000/categories", data);
             if (response.status === 200) {
+                fetchCategories();
                 toast.success("Thêm thành công.", {
                     position: "top-right",
                     autoClose: 1500,
@@ -89,34 +86,18 @@ const AddProduct = () => {
             {/* Hiển thị messages */}
             <ToastContainer />
             <div className="container">
-                <h1 className="heading">Thêm sản phẩm</h1>
+                <h1 className="heading">Thêm đanh mục</h1>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="add-form">
+                <form onSubmit={handleSubmit(onSubmit)} className="add-formCategories">
                     <div className="add-form__item">
                         <CustomTextField
                             id="outlined-basic"
-                            label="Tên sản phẩm"
+                            label="Tên danh mục"
                             variant="outlined"
                             className="add-form__item-name"
-                            {...register("name", { required: "Tên sản phẩm là bắt buộc" })}
+                            {...register("name", { required: "Tên danh mục là bắt buộc" })}
                             error={!!errors.name}
                             helperText={errors.name?.message}
-                        />
-                    </div>
-
-                    <div className="add-form__item">
-                        <CustomTextField
-                            id="outlined-basic"
-                            label="Giá"
-                            type="number"
-                            variant="outlined"
-                            className="add-form__item-name"
-                            {...register("price", {
-                                required: "Giá là bắt buộc",
-                                min: { value: 0, message: "Giá phải lớn hơn hoặc bằng 0" },
-                            })}
-                            error={!!errors.price}
-                            helperText={errors.price?.message}
                         />
                     </div>
 
@@ -135,48 +116,15 @@ const AddProduct = () => {
                     <div className="add-form__item">
                         <CustomTextField
                             id="outlined-basic"
-                            label="Số lượng"
-                            type="number"
-                            variant="outlined"
-                            className="add-form__item-name"
-                            {...register("stock", { required: "Số lượng là bắt buộc" })}
-                            error={!!errors.stock}
-                            helperText={errors.stock?.message}
-                        />
-                    </div>
-
-                    <div className="add-form__item">
-                        <CustomTextField
-                            id="outlined-basic"
                             label="Hình ảnh"
                             type="text"
                             variant="outlined"
                             className="add-form__item-name"
-                            {...register("imageURL", { required: "Hình ảnh là bắt buộc" })}
-                            error={!!errors.imageURL}
-                            helperText={errors.imageURL?.message}
+                            {...register("image", { required: "Hình ảnh là bắt buộc" })}
+                            error={!!errors.image}
+                            helperText={errors.image?.message}
                         />
                     </div>
-
-                    <Box sx={{ minWidth: 120 }} className="add-form__item">
-                        <FormControl fullWidth error={!!errors.category}>
-                            <InputLabel id="demo-simple-select-label">Danh mục sản phẩm</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="Danh mục sản phẩm"
-                                defaultValue=""
-                                {...register("category", { required: "Danh mục sản phẩm là bắt buộc" })}
-                            >
-                                {categories.map((category) => (
-                                    <MenuItem value={category._id} key={category._id}>
-                                        {category.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {errors.category && <p className="error-message">{errors.category.message}</p>}
-                        </FormControl>
-                    </Box>
 
                     <Button className="button-form" type="submit" variant="outlined">
                         Thêm
@@ -187,4 +135,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default AddCategory;

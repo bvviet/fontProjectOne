@@ -110,7 +110,7 @@ const UpdateProduct = () => {
             {/* Hiển thị messages */}
             <ToastContainer />
             <div className="container">
-                <h1 className="heading">Thêm sản phẩm</h1>
+                <h1 className="heading">Cập nhật sản phẩm</h1>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="add-form">
                     <div className="add-form__item">
@@ -208,7 +208,7 @@ const UpdateProduct = () => {
                     </Box>
 
                     <Button className="button-form" type="submit" variant="outlined">
-                        Thêm
+                        Cập nhật
                     </Button>
                 </form>
             </div>
