@@ -64,7 +64,7 @@ const Products = () => {
                     columnSpacing={{ sm: "30px" }}
                     columns={{ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }}
                 >
-                    {products.length > 0
+                    {products?.length > 0
                         ? products.map((product) => <ProductItem key={product._id} product={product} />)
                         : <p style={{margin:"20px 0", fontWeight:"600", fontSize:"1.5vw"}}>không có sản phẩm nào.</p>}
                 </Grid>
