@@ -14,8 +14,8 @@ const Category = () => {
     useEffect(() => {
         const fetchProductByCategory = async () => {
             const url = isActive
-                ? `http://localhost:3000/product/categories/${isActive}`
-                : `http://localhost:3000/product`;
+                ? `https://project-one-navy.vercel.app/categories/${isActive}`
+                : `https://project-one-navy.vercel.app`;
             const response = await axios.get(url);
             setProducts(response.data.data);
         };
