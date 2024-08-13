@@ -41,7 +41,7 @@ const AddCategory = () => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axios.post("http://localhost:3000/categories", data);
+            const response = await axios.post("https://project-one-navy.vercel.app/categories", data);
             if (response.status === 200) {
                 fetchCategories();
                 toast.success("Thêm thành công.", {

@@ -45,7 +45,7 @@ const AddProduct = () => {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const response = await axios.post("http://localhost:3000/product", data);
+            const response = await axios.post("https://project-one-navy.vercel.app/product", data);
             if (response.status === 200) {
                 toast.success("Thêm thành công.", {
                     position: "top-right",

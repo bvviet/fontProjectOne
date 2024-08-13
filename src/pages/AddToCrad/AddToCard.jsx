@@ -2,53 +2,17 @@ import { Box, Grid } from "@mui/material";
 import "./AddToCard.scss";
 
 import aroundRight from "../../assets/icons/aroundRight.svg";
-import deleted from "../../assets/icons/delete.svg";
 import giftAdd from "../../assets/icons/giftAdd.svg";
 import aroundLeft from "../../assets/icons/aroundLeft.svg";
 import Button from "../../components/Button/Button";
 import { useContext } from "react";
 import { OrderContext } from "../../hooks/OrderContext";
-import axios from "axios";
-import { LoadingContext } from "../../hooks/LoadingContext";
-import { MessagesContext } from "../../hooks/MessagesContext";
-import { toast } from "react-toastify";
-import AlertDialog from "../../components/DeleteConfirm/Delete";
-import AddFavorite from "../../components/AddFavourite/AddFavourite";
+import { Link } from "react-router-dom";
+import ProductOrderItem from "./ProductOrderItem";
+import Subtotal from "./Subtotal";
 
 const AddToCard = () => {
-    const { orderItems, orders, total, sumQuantity, fetchOrders } = useContext(OrderContext);
-    const { setIsLoading } = useContext(LoadingContext);
-    const { setMessages } = useContext(MessagesContext);
-
-    const handleDeleteOrderItem = async (orderItemId) => {
-        if (orderItemId) {
-            try {
-                setIsLoading(true);
-                const res = await axios.delete(`https://project-one-navy.vercel.app/order/${orderItemId}`);
-                fetchOrders();
-                if (res.status === 200) {
-                    toast.success("Xóa khỏi vào giỏ hàng thành công ✅", {
-                        position: "top-right",
-                        autoClose: 1500,
-                    });
-                }
-            } catch (error) {
-                let errorMessage = "";
-                if (!error.response) {
-                    errorMessage = "Không có kết nối mạng. Vui lòng kiểm tra lại kết nối.";
-                } else if (error.response.status === 404) {
-                    errorMessage = "API hiện tại đang bị lỗi :((";
-                } else if (error.response.data.message || error.response.data.errors) {
-                    errorMessage = error.response.data.message || error.response.data.errors[0];
-                } else {
-                    errorMessage = "Đã xảy ra lỗi vui lòng thử lại";
-                }
-                setMessages(errorMessage);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-    };
+    const { orderItems, orders, total } = useContext(OrderContext);
 
     if (!orders.length) {
         return <div>Loading...</div>;
@@ -105,50 +69,7 @@ const AddToCard = () => {
                 <Grid item xs={4.3} className="add-left">
                     {/* Sản phẩm */}
                     {orderItems.map((item) => (
-                        <div key={item?._id}>
-                            <section className="add-item">
-                                <div className="add-item__image">
-                                    <img src={item.productId?.imageURL} alt="" style={{ borderRadius: "5px" }} />
-                                </div>
-                                {/*  */}
-                                <div className="add-item__main">
-                                    <div className="add-item__title">
-                                        <h1 className="add-item__heading">{item.productId?.name}</h1>
-                                        <p className="add-item__price">${item.totalAmount}</p>
-                                    </div>
-                                    <div className="add-item__stock">${item.productId?.price} | In Stock</div>
-                                    <div className="product-option">
-                                        <form className="product-option__form">
-                                            <select name="" id="" className="product-option__select">
-                                                <option value="LavAzza" className="product-option__select-option">
-                                                    LavAzza
-                                                </option>
-                                            </select>
-                                            <div className="product-option__quantity">
-                                                <input
-                                                    type="number"
-                                                    defaultValue={item.quantity}
-                                                    style={{ width: "38px" }}
-                                                />
-                                            </div>
-                                        </form>
-                                        <div className="product-option__icon">
-                                            <div className="product-option__icon-item">
-                                                <AddFavorite productId={item.productId._id} />
-                                                Save
-                                            </div>
-                                            <AlertDialog handleDelete={() => handleDeleteOrderItem(item?._id)}>
-                                                <div className="product-option__icon-item">
-                                                    <img src={deleted} alt="" />
-                                                    Delete
-                                                </div>
-                                            </AlertDialog>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <div className="add__dot"></div>
-                        </div>
+                        <ProductOrderItem key={item._id} item={item} />
                     ))}
                     {/* Bottom */}
                     <div className="addLeft-bottom">
@@ -176,30 +97,11 @@ const AddToCard = () => {
                 {/* Right */}
                 <Grid item xs={1.7} className="add-right">
                     <section className="add-right__top">
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">
-                                Subtotal <span style={{ fontWeight: "400" }}>(items)</span>
-                            </p>
-                            <p className="add-right__subtotal-right">{sumQuantity}</p>
-                        </div>
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">
-                                Price <span style={{ fontWeight: "400" }}>(Total)</span>
-                            </p>
-                            <p className="add-right__subtotal-right">${total}</p>
-                        </div>
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">Shipping</p>
-                            <p className="add-right__subtotal-right">$10.00</p>
-                        </div>
-                        <div className="add__dot add__dot-right"></div>
-                        <div className="add-right__subtotal">
-                            <p className="add-right__subtotal-left">Estimated Total</p>
-                            <p className="add-right__subtotal-right">${total + 10}</p>
-                        </div>
-
+                        <Subtotal />
                         <div className="add-btn">
-                            <Button title="Continue to checkout" />
+                            <Link to={"/checkout"}>
+                                <Button title="Continue to checkout" />
+                            </Link>
                         </div>
                     </section>
 

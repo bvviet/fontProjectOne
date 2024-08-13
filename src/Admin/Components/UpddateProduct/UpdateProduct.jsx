@@ -9,10 +9,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
+import { CategoryContext } from "../../../contexts/categoriesCotext";
 
 const CustomTextField = styled(TextField)({
     "& label.MuiFormLabel-root": {
@@ -32,6 +33,7 @@ const UpdateProduct = () => {
         imageURL: "",
         category: 10,
     });
+    const { categories } = useContext(CategoryContext);
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -119,9 +121,7 @@ const UpdateProduct = () => {
                             label="Tên sản phẩm"
                             variant="outlined"
                             className="add-form__item-name"
-                            {...register("name", { required: "Tên sản phẩm là bắt buộc" })}
-                            error={!!errors.name}
-                            helperText={errors.name?.message}
+                            {...register("name")}
                             value={product.name}
                             onChange={(e) => setProduct({ ...product, name: e.target.value })}
                         />
@@ -135,11 +135,8 @@ const UpdateProduct = () => {
                             variant="outlined"
                             className="add-form__item-name"
                             {...register("price", {
-                                required: "Giá là bắt buộc",
-                                min: { value: 0, message: "Giá phải lớn hơn hoặc bằng 0" },
+                               
                             })}
-                            error={!!errors.price}
-                            helperText={errors.price?.message}
                             value={product?.price}
                             onChange={(e) => setProduct({ ...product, price: e.target.value })}
                         />
@@ -151,9 +148,7 @@ const UpdateProduct = () => {
                             label="Mô tả"
                             variant="outlined"
                             className="add-form__item-name"
-                            {...register("description", { required: "Mô tả là bắt buộc" })}
-                            error={!!errors.description}
-                            helperText={errors.description?.message}
+                            {...register("description", )}
                             value={product?.description}
                             onChange={(e) => setProduct({ ...product, description: e.target.value })}
                         />
@@ -166,9 +161,7 @@ const UpdateProduct = () => {
                             type="number"
                             variant="outlined"
                             className="add-form__item-name"
-                            {...register("stock", { required: "Số lượng là bắt buộc" })}
-                            error={!!errors.stock}
-                            helperText={errors.stock?.message}
+                            {...register("stock")}
                             value={product?.stock}
                             onChange={(e) => setProduct({ ...product, stock: e.target.value })}
                         />
@@ -181,9 +174,7 @@ const UpdateProduct = () => {
                             type="text"
                             variant="outlined"
                             className="add-form__item-name"
-                            {...register("imageURL", { required: "Hình ảnh là bắt buộc" })}
-                            error={!!errors.imageURL}
-                            helperText={errors.imageURL?.message}
+                            {...register("imageURL")}
                             value={product?.imageURL}
                             onChange={(e) => setProduct({ ...product, imageURL: e.target.value })}
                         />
@@ -196,14 +187,15 @@ const UpdateProduct = () => {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="Danh mục sản phẩm"
-                                defaultValue={product.category === product.category}
-                                {...register("category", { required: "Danh mục sản phẩm là bắt buộc" })}
+                                defaultValue=""
+                                {...register("category")}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {categories.map((category) => (
+                                    <MenuItem value={category._id} key={category._id}>
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
                             </Select>
-                            {errors.category && <p className="error-message">{errors.category.message}</p>}
                         </FormControl>
                     </Box>
 

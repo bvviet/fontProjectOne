@@ -222,6 +222,14 @@ export default function Header() {
                                             </li>
                                         </ul>
 
+                                        <ul className="dialog__list">
+                                            <li className="dialog__item">
+                                                <Link to="/purchaseOrder" className="dialog__link">
+                                                    Đơn mua
+                                                </Link>
+                                            </li>
+                                        </ul>
+
                                         <hr className="dialog__hr" />
                                         <ul className="dialog__list">
                                             <li className="dialog__item">

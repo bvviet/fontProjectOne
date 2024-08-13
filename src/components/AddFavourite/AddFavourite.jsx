@@ -15,7 +15,7 @@ const AddFavorite = ({ productId }) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
-        setIsFavorite(products.some((item) => item.productId._id === productId));
+        setIsFavorite(products.some((item) => item?.productId?._id === productId));
     }, [products, productId]);
 
     // Thêm sản phẩm vào danh sách yêu thích

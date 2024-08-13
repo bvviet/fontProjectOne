@@ -1,0 +1,106 @@
+.purchase {
+    padding: 30px 200px;
+    color: var(--color-addToCard-heading);
+    background: var(--bg-main);
+    &-time {
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 142.857%;
+    }
+}
+
+.purchase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.purchase-item {
+    padding: 20px;
+    border-radius: 3px;
+    border: 1px solid #c2bebe;
+    box-shadow: 0px 20px 60px 10px rgba(237, 237, 246, 0.2);
+}
+
+.purchase-main {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 15px 0;
+
+    &__image {
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+    }
+
+    &__title,
+    &__quantity {
+        font-size: 1.8rem;
+        font-weight: 500;
+        line-height: 144.444%;
+    }
+
+    &__quantity {
+        margin: 5px 0;
+        font-size: 1.7rem;
+        opacity: 0.8;
+    }
+
+    &__pass {
+        border: 1px solid seagreen;
+        color: seagreen;
+        width: fit-content;
+        padding: 0px 5px;
+        font-size: 1.3rem;
+        font-weight: 400;
+        line-height: 142.857%;
+    }
+
+    &__total {
+        margin-left: auto;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 144.444%;
+        color: #b35943;
+    }
+}
+
+.purchase-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.purchase-total {
+    color: #b35943;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 144.444%;
+}
+
+.purchase-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__pass {
+        background-color: #ffb700;
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 145.455%;
+        padding: 5px 30px;
+        border-radius: 3px;
+    }
+
+    &__contact {
+        border: 1px solid #c2bebe;
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 145.455%;
+        padding: 5px 30px;
+        border-radius: 3px;
+    }
+}

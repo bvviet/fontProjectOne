@@ -117,7 +117,7 @@ const FavoriteProduct = () => {
                                     <div className="add-item__main">
                                         <div className="add-item__title">
                                             <h1 className="add-item__heading">{item.productId?.name}</h1>
-                                            <p className="add-item__price">${item.productId.price}</p>
+                                            <p className="add-item__price">${item.productId?.price}</p>
                                         </div>
                                         <div className="add-item__stock">${item.productId?.price} | In Stock</div>
                                         <div className="product-option">
@@ -135,7 +135,7 @@ const FavoriteProduct = () => {
                                                         gap: "30px",
                                                     }}
                                                 >
-                                                    <AddFavorite productId={item?.productId._id} />
+                                                    <AddFavorite productId={item?.productId?._id} />
                                                     <AlertDialog handleDelete={() => handleDeleteOrderItem(item?._id)}>
                                                         <div className="product-option__icon-item">
                                                             <img src={deleted} alt="" />
@@ -145,7 +145,7 @@ const FavoriteProduct = () => {
                                                 </div>
                                             </form>
                                             <div className="product-option__icon">
-                                                <ButtonAddToCard productId={item.productId._id} product={item} />
+                                                <ButtonAddToCard productId={item.productId?._id} product={item} />
                                             </div>
                                         </div>
                                     </div>

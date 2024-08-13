@@ -5,22 +5,34 @@ import { CategoryContext } from "../../contexts/categoriesCotext";
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../contexts/productsCotext";
 import axios from "axios";
+import { LoadingContext } from "../../hooks/LoadingContext";
 
 const Category = () => {
     const { categories } = useContext(CategoryContext);
     const { setProducts } = useContext(ProductContext);
+    const { setIsLoading } = useContext(LoadingContext);
     const [isActive, setIsActive] = useState("");
 
     useEffect(() => {
         const fetchProductByCategory = async () => {
-            const url = isActive
-                ? `https://project-one-navy.vercel.app/categories/${isActive}`
-                : `https://project-one-navy.vercel.app`;
-            const response = await axios.get(url);
-            setProducts(response.data.data);
+            try {
+                setIsLoading(true);
+                const url = isActive
+                    ? `https://project-one-navy.vercel.app/product/categories/${isActive}`
+                    : `https://project-one-navy.vercel.app/product`;
+                const response = await axios.get(url);
+
+                setProducts(response.data.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsLoading(false);
+            }
         };
         fetchProductByCategory();
     }, [isActive, setProducts]);
+
+    console.log("isActive", isActive);
 
     const handleCategoryClick = (categoryId) => {
         if (isActive === categoryId) {

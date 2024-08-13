@@ -6,8 +6,10 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../hooks/UserContextUser";
 import { toast } from "react-toastify";
+import { useModelContext } from "../../contexts/ModalProvider";
 
 const UpdateProfile = () => {
+    const { setIsSShowing, isShowing } = useModelContext();
     const [user, setUser] = useState({});
     const { userData, fetchUserId } = useContext(UserContext);
     useEffect(() => {
@@ -24,6 +26,7 @@ const UpdateProfile = () => {
         try {
             const res = await axios.patch(`https://project-one-navy.vercel.app/auth/update/${user._id}`, data);
             if (res.status === 200) {
+                setIsSShowing(false);
                 toast.success("Cập nhật thành công.", {
                     position: "top-right",
                     autoClose: 2000,
@@ -43,12 +46,15 @@ const UpdateProfile = () => {
     return (
         <div className="profile-right__content">
             <div className="update-profile">
-                <div className="update-profile__link">
-                    <Link to={"/profile"} className="">
-                        <img src={arowLeft} className="update-profile__link-icon" alt="Back" />
-                    </Link>
-                    <p>Personal info</p>
-                </div>
+                {!isShowing && (
+                    <div className="update-profile__link">
+                        <Link to={"/profile"} className="">
+                            <img src={arowLeft} className="update-profile__link-icon" alt="Back" />
+                        </Link>
+                        <p>Personal info</p>
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit(onSubmit)} className="form-profile">
                     <div className="form-profile__list">
                         <div className="form-profile__item">
@@ -120,9 +126,11 @@ const UpdateProfile = () => {
                     </div>
 
                     <div className="formButton">
-                        <Link to={"/profile"} className="formButton-cancel">
-                            Cancel
-                        </Link>
+                        {isShowing && (
+                            <div onClick={() => setIsSShowing(false)} className="formButton-cancel">
+                                Cancel
+                            </div>
+                        )}
 
                         <button type="submit" className={`formButton-submit `}>
                             Save Edit

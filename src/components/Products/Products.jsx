@@ -52,7 +52,7 @@ ProductItem.propTypes = {
 
 const Products = () => {
     const { products } = useContext(ProductContext);
-    console.log(products);
+    console.log("products", products);
 
     return (
         <div className="product">
