@@ -17,10 +17,13 @@ import avatar from "../../assets/images/avatar.avif";
 import documents from "../../assets/icons/document.svg";
 import close from "../../assets/icons/close.svg";
 import around from "../../assets/icons/around.svg";
+import chat from "../../assets/icons/chat.svg";
 import Logo from "../../components/Logo/Logo";
 import Search from "../../components/Search/Search";
 import { OrderContext } from "../../hooks/OrderContext";
 import { FavoriteContext } from "../../hooks/FavoriteContext";
+import { useModelContext } from "../../contexts/ModalProvider";
+import Chat from "../../pages/Chat";
 
 const NavBar = () => (
     <ul className="navbar">
@@ -54,7 +57,7 @@ export default function Header() {
     const [user, setUser] = useState(null);
     const [isShowProfile, setIsShowProfile] = useState(false);
     const dialogRef = useRef(null);
-    console.log(isShowProfile);
+    const { openPopup } = useModelContext();
 
     const navigate = useNavigate();
     // Lấy thông tin người dùng
@@ -191,6 +194,18 @@ export default function Header() {
                                     <img src={buy} alt="buy" className="top-action__icon icon" />
                                     <span className="top-action__title">${total}</span>
                                 </Link>
+                                {/* Chat */}
+                                <div
+                                    onClick={() => {
+                                        openPopup(<Chat />);
+                                    }}
+                                >
+                                    <img
+                                        src={chat}
+                                        alt=""
+                                        style={{ width: "30px", marginLeft: "10px", cursor: "pointer" }}
+                                    />
+                                </div>
                             </div>
 
                             {/* Avatar */}

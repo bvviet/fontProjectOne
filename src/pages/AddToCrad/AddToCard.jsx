@@ -32,91 +32,95 @@ const AddToCard = () => {
                 padding: "25px 0",
             }}
         >
-            {/* Filter */}
-            <div className="filter">
-                <div className="filter__item">
-                    <a href="#" className="filter__heading">
-                        Departments
-                    </a>
-                    <img src={aroundRight} alt="aroundRight" className="filter__icon" />
-                </div>
-                <div className="filter__item">
-                    <a href="#" className="filter__heading">
-                        Coffee
-                    </a>
-                    <img src={aroundRight} alt="aroundRight" className="filter__icon" />
-                </div>
-                <div className="filter__item">
-                    <a href="#" className="filter__heading">
-                        Coffee Beans
-                    </a>
-                    <img src={aroundRight} alt="aroundRight" className="filter__icon" />
-                </div>
-                <div className="filter__item">
-                    <a href="#" className="filter__heading filter__heading-active">
-                        LavAzza
-                    </a>
-                </div>
-            </div>
-
-            <Grid
-                container
-                columns={{ xs: 1.7, sm: 1.7, md: 1.7, lg: 6, xl: 6 }}
-                style={{ padding: "30px 0" }}
-                className="add-list"
-            >
-                {/* Left */}
-                <Grid item xs={4.3} className="add-left">
-                    {/* Sản phẩm */}
-                    {orderItems.map((item) => (
-                        <ProductOrderItem key={item._id} item={item} />
-                    ))}
-                    {/* Bottom */}
-                    <div className="addLeft-bottom">
-                        <div className="addLeft-bottom__left">
-                            <img src={aroundLeft} alt="" />
-                            Continue Shopping
-                        </div>
-                        <div className="addLeft-bottom__list">
-                            <div className="addLeft-bottom__items">
-                                <p className="addLeft-bottom__item">Subtotal:</p>
-                                <p className="addLeft-bottom__item">${total}</p>
-                            </div>
-                            <div className="addLeft-bottom__items">
-                                <p className="addLeft-bottom__item">Shipping:</p>
-                                <p className="addLeft-bottom__item">$10.00</p>
-                            </div>
-                            <div className="add__dot "></div>
-                            <div className="addLeft-bottom__items">
-                                <p className="addLeft-bottom__total">Total:</p>
-                                <p className="addLeft-bottom__total">${total + 10}</p>
-                            </div>
-                        </div>
+            <div className="addToCard">
+                {/* Filter */}
+                <div className="filter">
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading">
+                            Departments
+                        </a>
+                        <img src={aroundRight} alt="aroundRight" className="filter__icon" />
                     </div>
-                </Grid>
-                {/* Right */}
-                <Grid item xs={1.7} className="add-right">
-                    <section className="add-right__top">
-                        <Subtotal />
-                        <div className="add-btn">
-                            <Link to={"/checkout"}>
-                                <Button title="Continue to checkout" />
-                            </Link>
-                        </div>
-                    </section>
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading">
+                            Coffee
+                        </a>
+                        <img src={aroundRight} alt="aroundRight" className="filter__icon" />
+                    </div>
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading">
+                            Coffee Beans
+                        </a>
+                        <img src={aroundRight} alt="aroundRight" className="filter__icon" />
+                    </div>
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading filter__heading-active">
+                            LavAzza
+                        </a>
+                    </div>
+                </div>
 
-                    {/* Gift */}
-                    <section className="add-gift">
-                        <div className="add-gift__image">
-                            <img src={giftAdd} alt="" />
+                <Grid
+                    container
+                    columns={{ xs: 1.7, sm: 1.7, md: 1.7, lg: 6, xl: 6 }}
+                    style={{ padding: "30px 0" }}
+                    className="add-list"
+                >
+                    {/* Left */}
+                    <Grid item xs={4.3} className="add-left">
+                        {/* Sản phẩm */}
+                        {orderItems.map((item) => (
+                            <ProductOrderItem key={item._id} item={item} />
+                        ))}
+                        {/* Bottom */}
+                        <div className="addLeft-bottom">
+                            <div className="addLeft-bottom__left">
+                                <img src={aroundLeft} alt="" />
+                                Continue Shopping
+                            </div>
+                            <div className="addLeft-bottom__list">
+                                <div className="addLeft-bottom__items">
+                                    <p className="addLeft-bottom__item">Subtotal:</p>
+                                    <p className="addLeft-bottom__item">${total}</p>
+                                </div>
+                                <div className="addLeft-bottom__items">
+                                    <p className="addLeft-bottom__item">Shipping:</p>
+                                    <p className="addLeft-bottom__item">$10.00</p>
+                                </div>
+                                <div className="add__dot "></div>
+                                <div className="addLeft-bottom__items">
+                                    <p className="addLeft-bottom__total">Total:</p>
+                                    <p className="addLeft-bottom__total">${total + 10}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="add-gift__text">
-                            <p className="add-gift__title">Send this order as a gift.</p>
-                            <p className="add-gift__desc">Available items will be shipped to your gift recipient.</p>
-                        </div>
-                    </section>
+                    </Grid>
+                    {/* Right */}
+                    <Grid item xs={1.7} className="add-right">
+                        <section className="add-right__top">
+                            <Subtotal />
+                            <div className="add-btn">
+                                <Link to={"/checkout"}>
+                                    <Button title="Continue to checkout" />
+                                </Link>
+                            </div>
+                        </section>
+
+                        {/* Gift */}
+                        <section className="add-gift">
+                            <div className="add-gift__image">
+                                <img src={giftAdd} alt="" />
+                            </div>
+                            <div className="add-gift__text">
+                                <p className="add-gift__title">Send this order as a gift.</p>
+                                <p className="add-gift__desc">
+                                    Available items will be shipped to your gift recipient.
+                                </p>
+                            </div>
+                        </section>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         </Box>
     );
 };

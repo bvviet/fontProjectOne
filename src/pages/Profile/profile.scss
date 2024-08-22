@@ -1,6 +1,8 @@
 @use "../../assets/scss/abstracts/mixins" as abstracts;
 
 .content-profile {
+    max-width: 1340px;
+    margin: 0 auto;
     @include abstracts.screen(md) {
         display: block;
     }
@@ -148,14 +150,13 @@
 // account-list
 
 .account {
-    margin: 30px 0;
+    margin-top: 30px;
 }
 
 .account-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px;
 
     @include abstracts.screen(md) {
         justify-content: center;
@@ -170,6 +171,7 @@
     padding: 10px;
     background: var(--bg-account-item);
     border-radius: 10px;
+    margin-bottom: 30px;
 
     @include abstracts.screen(xl) {
         width: 100%;

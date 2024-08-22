@@ -1,5 +1,10 @@
 @use "../../assets/scss/abstracts/mixins" as abstracts;
 
+.addToCard {
+    max-width: 1340px;
+    margin: 0 auto;
+}
+
 .filter {
     display: flex;
     align-items: center;

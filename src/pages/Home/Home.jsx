@@ -1,7 +1,9 @@
-import SlideShow from "../../components/SlidesShow/Slides";
+// import SlideShow from "../../components/SlidesShow/Slides";
 import Category from "../../components/categories/Category";
 import Products from "../../components/Products/Products";
 import { Box } from "@mui/material";
+
+import banner from "../../assets/images/banner.png";
 
 const Home = () => {
     return (
@@ -19,7 +21,10 @@ const Home = () => {
                 }}
             >
                 {/* Slide */}
-                <SlideShow />
+                {/* <SlideShow /> */}
+                <div>
+                    <img src={banner} alt="" style={{ margin: "0 auto", padding: "40px 0" }} />
+                </div>
                 {/* Category */}
                 <>
                     <Category />

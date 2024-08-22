@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
+import clearIcon from "../assets/icons/clear.svg";
 
 const ModalContext = createContext();
 
@@ -9,7 +10,7 @@ export const useModelContext = () => {
 };
 
 const ModalProvider = ({ children }) => {
-    const [isShowing, setIsSShowing] = useState(false);
+    const [isShowing, setIsShowing] = useState(false);
     const [content, setContent] = useState();
 
     useEffect(() => {
@@ -20,26 +21,21 @@ const ModalProvider = ({ children }) => {
         }
     }, [isShowing]);
 
-    const modalStyle = {
-        position: "fixed",
-        inset: "0",
+    const openPopup = (content) => {
+        setIsShowing(true);
+        setContent(content);
     };
 
     return (
-        <ModalContext.Provider value={{ setIsSShowing, isShowing, setContent }}>
+        <ModalContext.Provider value={{ openPopup, setIsShowing }}>
             {children}
             {isShowing && (
-                <div style={modalStyle}>
-                    <div
-                        style={{
-                            position: "absolute",
-                            inset: "0",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background: "rgba(0, 0, 0, 0.4)",
-                        }}
-                    >
+                <div className="fixed inset-0 flex items-center justify-center bg-slate-600/60 ">
+                    <div className="relative">
+                        {/* Nút "Đóng" nằm ở mép trên bên phải của content */}
+                        <div className="absolute top-2 right-4 p-2 cursor-pointer" onClick={() => setIsShowing(false)}>
+                            <img src={clearIcon} alt="close" width={20} style={{ filter: " var(--icon--color)" }} />
+                        </div>
                         {content}
                     </div>
                 </div>

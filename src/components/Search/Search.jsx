@@ -88,7 +88,7 @@ const Search = () => {
 
     return (
         <Tippy
-            visible={showResult && searchResult.length > 0}
+            visible={showResult}
             interactive
             onClickOutside={handleHideResult}
             animation={true}
@@ -97,32 +97,38 @@ const Search = () => {
             render={(attrs) => (
                 <div tabIndex="-1" {...attrs}>
                     <div className="wrapper">
-                        <AnimatePresence>
-                            {searchResult.map((value) => (
-                                <motion.div
-                                    key={value._id}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    <Link to={`/product/${value._id}`}>
-                                        <div className="result-item">
-                                            <div className="result-item__right">
-                                                <Link to={`/product/${value._id}`}>
-                                                    <p className="result-item__title">{value.name}</p>
-                                                </Link>
-                                                <span className="result-item__price">{value.price}$</span>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : searchResult.length > 0 ? (
+                            <AnimatePresence>
+                                {searchResult.map((value) => (
+                                    <motion.div
+                                        key={value._id}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <Link to={`/product/${value._id}`}>
+                                            <div className="result-item">
+                                                <div className="result-item__right">
+                                                    <Link to={`/product/${value._id}`}>
+                                                        <p className="result-item__title">{value.name}</p>
+                                                    </Link>
+                                                    <span className="result-item__price">{value.price}$</span>
+                                                </div>
+                                                <div className="result-item__img">
+                                                    <img src={value.imageURL} alt="Lỗi ảnh" />
+                                                </div>
                                             </div>
-                                            <div className="result-item__img">
-                                                <img src={value.imageURL} alt="Lỗi ảnh" />
-                                            </div>
-                                        </div>
-                                    </Link>
-                                    <hr />
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
+                                        </Link>
+                                        <hr />
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        ) : (
+                            <p>Nhập từ khóa để tìm kiếm sản phẩm.</p>
+                        )}
                     </div>
                 </div>
             )}

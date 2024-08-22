@@ -40,7 +40,7 @@ const Profile = () => {
 
                 <ProfileLeft user={user} />
                 {/* Profile right */}
-                <Grid item xs={6} sm={8} className="profile-right">
+                <Grid item xs={6} sm={8.5} className="profile-right">
                     <Outlet />
                 </Grid>
             </Grid>

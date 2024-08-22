@@ -1,3 +1,5 @@
+import "./FavoriteProduct.scss";
+
 import { Box, Grid } from "@mui/material";
 import aroundRight from "../../assets/icons/aroundRight.svg";
 import deleted from "../../assets/icons/delete.svg";
@@ -70,103 +72,109 @@ const FavoriteProduct = () => {
                 minHeight: "100vh",
             }}
         >
-            {/* Filter */}
-            <div className="filter">
-                <div className="filter__item">
-                    <a href="#" className="filter__heading">
-                        Departments
-                    </a>
-                    <img src={aroundRight} alt="aroundRight" className="filter__icon" />
+            <div className="favorite">
+                {/* Filter */}
+                <div className="filter">
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading">
+                            Departments
+                        </a>
+                        <img src={aroundRight} alt="aroundRight" className="filter__icon" />
+                    </div>
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading">
+                            Coffee
+                        </a>
+                        <img src={aroundRight} alt="aroundRight" className="filter__icon" />
+                    </div>
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading">
+                            Coffee Beans
+                        </a>
+                        <img src={aroundRight} alt="aroundRight" className="filter__icon" />
+                    </div>
+                    <div className="filter__item">
+                        <a href="#" className="filter__heading filter__heading-active">
+                            LavAzza
+                        </a>
+                    </div>
                 </div>
-                <div className="filter__item">
-                    <a href="#" className="filter__heading">
-                        Coffee
-                    </a>
-                    <img src={aroundRight} alt="aroundRight" className="filter__icon" />
-                </div>
-                <div className="filter__item">
-                    <a href="#" className="filter__heading">
-                        Coffee Beans
-                    </a>
-                    <img src={aroundRight} alt="aroundRight" className="filter__icon" />
-                </div>
-                <div className="filter__item">
-                    <a href="#" className="filter__heading filter__heading-active">
-                        LavAzza
-                    </a>
-                </div>
-            </div>
 
-            <Grid
-                container
-                columns={{ xs: 1.7, sm: 1.7, md: 1.7, lg: 6, xl: 6 }}
-                style={{ padding: "30px 0" }}
-                className="add-list"
-            >
-                {/* Left */}
-                <Grid item xs={6} className="add-left">
-                    {/* Sản phẩm */}
-                    {products.length > 0 ? (
-                        products.map((item) => (
-                            <div key={item._id}>
-                                <section className="add-item">
-                                    <div className="add-item__image">
-                                        <img src={item.productId?.imageURL} alt="" style={{ borderRadius: "5px" }} />
-                                    </div>
-                                    {/*  */}
-                                    <div className="add-item__main">
-                                        <div className="add-item__title">
-                                            <h1 className="add-item__heading">{item.productId?.name}</h1>
-                                            <p className="add-item__price">${item.productId?.price}</p>
+                <Grid container columns={{ xs: 1.7, sm: 1.7, md: 1.7, lg: 6, xl: 6 }} className="add-list">
+                    {/* Left */}
+                    <Grid item xs={6} className="add-left">
+                        {/* Sản phẩm */}
+                        {products.length > 0 ? (
+                            products.map((item) => (
+                                <div key={item._id}>
+                                    <section className="add-item">
+                                        <div className="add-item__image">
+                                            <img
+                                                src={item.productId?.imageURL}
+                                                alt=""
+                                                style={{ borderRadius: "5px" }}
+                                            />
                                         </div>
-                                        <div className="add-item__stock">${item.productId?.price} | In Stock</div>
-                                        <div className="product-option">
-                                            <form className="product-option__form">
-                                                <select name="" id="" className="product-option__select">
-                                                    <option value="LavAzza" className="product-option__select-option">
-                                                        LavAzza
-                                                    </option>
-                                                </select>
+                                        {/*  */}
+                                        <div className="add-item__main">
+                                            <div className="add-item__title">
+                                                <h1 className="add-item__heading">{item.productId?.name}</h1>
+                                                <p className="add-item__price">${item.productId?.price}</p>
+                                            </div>
+                                            <div className="add-item__stock">${item.productId?.price} | In Stock</div>
+                                            <div className="product-option">
+                                                <form className="product-option__form">
+                                                    <select name="" id="" className="product-option__select">
+                                                        <option
+                                                            value="LavAzza"
+                                                            className="product-option__select-option"
+                                                        >
+                                                            LavAzza
+                                                        </option>
+                                                    </select>
 
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        gap: "30px",
-                                                    }}
-                                                >
-                                                    <AddFavorite productId={item?.productId?._id} />
-                                                    <AlertDialog handleDelete={() => handleDeleteOrderItem(item?._id)}>
-                                                        <div className="product-option__icon-item">
-                                                            <img src={deleted} alt="" />
-                                                            Delete
-                                                        </div>
-                                                    </AlertDialog>
+                                                    <div
+                                                        style={{
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            gap: "30px",
+                                                        }}
+                                                    >
+                                                        <AddFavorite productId={item?.productId?._id} />
+                                                        <AlertDialog
+                                                            handleDelete={() => handleDeleteOrderItem(item?._id)}
+                                                        >
+                                                            <div className="product-option__icon-item">
+                                                                <img src={deleted} alt="" />
+                                                                Delete
+                                                            </div>
+                                                        </AlertDialog>
+                                                    </div>
+                                                </form>
+                                                <div className="product-option__icon">
+                                                    <ButtonAddToCard productId={item.productId?._id} product={item} />
                                                 </div>
-                                            </form>
-                                            <div className="product-option__icon">
-                                                <ButtonAddToCard productId={item.productId?._id} product={item} />
                                             </div>
                                         </div>
-                                    </div>
-                                </section>
-                                <div className="add__dot"></div>
-                            </div>
-                        ))
-                    ) : (
-                        <div>Loading ...</div>
-                    )}
+                                    </section>
+                                    <div className="add__dot"></div>
+                                </div>
+                            ))
+                        ) : (
+                            <div>Loading ...</div>
+                        )}
 
-                    {/* Bottom */}
-                    <div className="addLeft-bottom" style={{ marginTop: "50px" }}>
-                        <div className="addLeft-bottom__left">
-                            <img src={aroundLeft} alt="" />
-                            Continue Shopping
+                        {/* Bottom */}
+                        <div className="addLeft-bottom" style={{ marginTop: "50px" }}>
+                            <div className="addLeft-bottom__left">
+                                <img src={aroundLeft} alt="" />
+                                Continue Shopping
+                            </div>
+                            <div className="addLeft-bottom__list"></div>
                         </div>
-                        <div className="addLeft-bottom__list"></div>
-                    </div>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         </Box>
     );
 };

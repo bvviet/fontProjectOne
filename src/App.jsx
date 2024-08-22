@@ -28,6 +28,9 @@ import ProfileMain from "./pages/Profile/ProfileMain.jsx";
 import UpdateProfile from "./pages/Profile/UpdateProfile.jsx";
 import ModalProvider from "./contexts/ModalProvider.jsx";
 import PurchaseOrder from "./pages/PurchaseOrder/PurchaseOrder.jsx";
+import UserChat from "./pages/UserChat.jsx";
+import AdminChat from "./Admin/pages/AdminChat.jsx";
+import Chat from "./pages/Chat.jsx";
 
 function App() {
     return (
@@ -53,6 +56,8 @@ function App() {
                                                 <Route path="/addToCard" element={<AddToCard />} />
                                                 <Route path="/favorite" element={<FavoriteProduct />} />
                                                 <Route path="/purchaseOrder" element={<PurchaseOrder />} />
+                                                <Route path="/chat" element={<Chat />} />
+                                                <Route path="/userChat/:conversationId" element={<UserChat />} />
                                             </Route>
 
                                             <Route path="/admin" element={<AdminLayout />}>
@@ -62,6 +67,7 @@ function App() {
                                                 <Route path="update/:id" element={<UpdateProduct />}></Route>
                                                 <Route path="categories/list" element={<ListCategories />}></Route>
                                                 <Route path="categories/add" element={<AddCategory />}></Route>
+                                                <Route path="adminChat" element={<AdminChat />}></Route>
                                             </Route>
 
                                             <Route path="/login" element={<Login />} />

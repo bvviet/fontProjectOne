@@ -34,8 +34,8 @@ const ProfileMain = () => {
 
             {/* Account info */}
             <div className="account">
-                <h2 className="profile-title">My Wallet</h2>
-                <p className="profile-desc">Payment methods</p>
+                <h2 className="profile-title">Account info</h2>
+                <p className="profile-desc">Addresses, contact information and password</p>
                 <div className="account-list">
                     <section className="account-item">
                         <div className="account-item__icon">

@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 const ProfileLeft = ({ user }) => {
     return (
-        <Grid item xs={6} sm={3.5}>
+        <Grid item xs={6} sm={3}>
             <div className="profile">
                 <div className="profile-info">
                     <img src={user.avatar} alt="" className="profile-info__image" />
