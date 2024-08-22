@@ -1,0 +1,49 @@
+@use "../../../assets/scss/abstracts/mixins" as abstracts;
+
+.description {
+    width: 70%;
+    color: var(--text-color);
+    line-height: 150%;
+
+    @include abstracts.screen(md) {
+        width: 100%;
+    }
+
+    &__title {
+        font-size: 2.2rem;
+        font-weight: 600;
+        margin: 20px 0;
+    }
+    &__title2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 20px 0;
+    }
+
+    &__desc {
+        font-size: 1.6rem;
+        line-height: 142.857%;
+        margin: 20px 0;
+    }
+
+    &__image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 90%;
+    }
+
+    &__blockquote {
+        background: rgba(119, 218, 230, 0.1);
+        padding: 20px;
+        border-left: 3px solid #77dae6;
+        margin: 20px 0;
+    }
+}
+
+hr {
+    border: none;
+    height: 1px;
+    margin: 40px 0;
+    background: #3e4043;
+}

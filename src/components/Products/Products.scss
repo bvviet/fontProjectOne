@@ -3,6 +3,7 @@
 .product {
     max-width: 1340px;
     margin: 0 auto;
+    padding: 50px 0;
     &__title {
         margin-bottom: 21px;
         color: var(--text-color);
@@ -25,6 +26,7 @@
     background: var(--bg-product);
     box-shadow: 0px 20px 60px 10px var(--shadow-product-item);
     transition: transform 0.2s, box-shadow 0.2s;
+
     &:hover {
         transform: translateY(-1px);
         box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.1);
@@ -72,6 +74,13 @@
         font-size: 1.6rem;
         font-weight: 500;
         line-height: 150%;
+    }
+
+    &__title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 200px; /* Điều chỉnh theo ý bạn */
     }
 
     &__lava {

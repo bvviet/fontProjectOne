@@ -17,7 +17,7 @@ const Home = () => {
                         lg: "50px", // padding cho kích thước lớn (large)
                         xl: "50px", // padding cho kích thước rất lớn (extra-large)
                     },
-                    backgroundColor: "var(--bg-detail)",
+                    backgroundColor: "var(--body-bg)",
                 }}
             >
                 {/* Slide */}

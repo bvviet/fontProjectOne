@@ -16,6 +16,8 @@ import { LoadingContext } from "../../hooks/LoadingContext";
 import AddFavorite from "../../components/AddFavourite/AddFavourite";
 import ButtonAddToCard from "./ButtonAddToCard";
 import { UserContext } from "../../hooks/UserContextUser";
+import Description from "./Description/Description";
+import Similar from "./Similar/Similar";
 
 const Detail_Product = () => {
     const { id } = useParams();
@@ -23,6 +25,7 @@ const Detail_Product = () => {
     const { setMessages } = useContext(MessagesContext);
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const [change, setChange] = useState("description");
 
     const { userData } = useContext(UserContext);
     const [user, setUser] = useState(null);
@@ -81,6 +84,8 @@ const Detail_Product = () => {
             console.log(error);
         }
     };
+
+    console.log(product);
 
     return (
         <Box
@@ -221,30 +226,42 @@ const Detail_Product = () => {
                 {/* Điều hướng */}
                 <div className="directional">
                     <ul className="directional__list">
-                        <li className="directional__item">
-                            <a href="#!" className="directional__link">
+                        <li className={`directional__item `} onClick={() => setChange("description")}>
+                            <a
+                                href="javascript:void(0);"
+                                className={`directional__link ${
+                                    change === "description" ? "directional__link-active" : ""
+                                }`}
+                            >
                                 Description
                             </a>
                         </li>
-                        <li>
-                            <a href="#!" className="directional__link">
-                                Features
+                        <li onClick={() => setChange("review")}>
+                            <a
+                                href="javascript:void(0);"
+                                className={`directional__link ${change === "review" ? "directional__link-active" : ""}`}
+                            >
+                                Review
                             </a>
                         </li>
-                        <li>
-                            <a href="#!" className="directional__link directional__link-active">
-                                Review (1100)
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#!" className="directional__link">
+                        <li onClick={() => setChange("similar")}>
+                            <a
+                                href="javascript:void(0);"
+                                className={`directional__link ${
+                                    change === "similar" ? "directional__link-active" : ""
+                                }`}
+                            >
                                 Similar
                             </a>
                         </li>
                     </ul>
                 </div>
-                {/* Comment */}
-                <Comment productId={id} />
+
+                <div className="mt-[30px]">
+                    {change === "description" && <Description />}
+                    {change === "review" && <Comment productId={id} />}
+                    {change === "similar" && <Similar categoriesId={product?.category?._id} />}
+                </div>
             </div>
         </Box>
     );

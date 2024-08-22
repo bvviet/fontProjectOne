@@ -200,7 +200,11 @@ const Comment = ({ productId }) => {
             )}
 
             {/* Nội dung bình luận */}
-            <CommentItem user={user} comment={comment} deleteComment={deleteComment} />
+            {comment.length > 0 ? (
+                <CommentItem user={user} comment={comment} deleteComment={deleteComment} />
+            ) : (
+                <p style={{ color: "var(--text-color)" }}>Chưa có bình luận nào, bạn có thể để lại đánh giá.</p>
+            )}
         </div>
     );
 };

@@ -6,6 +6,7 @@ import Loading from "../../../../components/Loading/Loading";
 import { useContext } from "react";
 import { LoadingContext } from "../../../../hooks/LoadingContext";
 import { ToastContainer } from "react-toastify";
+import Footer from "../../../../layouts/footer/Footer";
 
 const Default_layout = () => {
     const { loading } = useContext(LoadingContext);
@@ -17,6 +18,7 @@ const Default_layout = () => {
             <main>
                 <Outlet />
             </main>
+            <Footer />
         </>
     );
 };

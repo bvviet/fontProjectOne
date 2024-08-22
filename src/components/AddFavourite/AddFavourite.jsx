@@ -54,7 +54,7 @@ const AddFavorite = ({ productId }) => {
             {isFavorite ? (
                 <img src={heartRed} alt="" style={{ marginTop: "8px", cursor: "pointer" }} />
             ) : (
-                <img src={heart} alt="" style={{ cursor: "pointer" }} />
+                <img src={heart} alt="" style={{ cursor: "pointer", filter: "var(--icon--color)" }} />
             )}
         </div>
     );
